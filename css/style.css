@@ -1,0 +1,386 @@
+@font-face {
+    font-family: 'gothamBook';
+    src: url('../fonts/gotham-book.eot');
+    src: url('../fonts/gotham-book.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/gotham-book.woff') format('woff'),
+    url('../fonts/gotham-book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'gothamMedium';
+    src: url('../fonts/gotham-medium.eot');
+    src: url('../fonts/gotham-medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/gotham-medium.woff') format('woff'),
+    url('../fonts/gotham-medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'gothamnarrowMedium';
+    src: url('../fonts/gothamxnarrow-medium.eot');
+    src: url('../fonts/gothamxnarrow-medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/gothamxnarrow-medium.woff') format('woff'),
+    url('../fonts/gothamxnarrow-medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'gotham-light';
+    src: url('../fonts/gotham-light_0.eot');
+    src: url('../fonts/gotham-light_0.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/gotham-light_0.woff') format('woff'),
+    url('../fonts/gotham-light_0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'gotham-bold';
+    src: url('../fonts/gotham-bold_0.eot');
+    src: url('../fonts/gotham-bold_0.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/gotham-bold_0.woff') format('woff'),
+    url('../fonts/gotham-bold_0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+    background: -webkit-radial-gradient( center, circle,    #333, black);
+    background:    -moz-radial-gradient( center, circle,    #333, black);
+    background:     -ms-radial-gradient( center, circle,    #333, black);
+    background:      -o-radial-gradient( center, circle,    #333, black);
+    background:         radial-gradient( circle at center,  #333, black);
+}
+a {
+    text-decoration: none;
+}
+a:focus {
+    outline: none;
+}
+body.home {
+    background: url(../images/backgrounds/home.jpg) no-repeat #7a900e center -50px;
+    background-size: 1280px 720px;
+}
+
+.content-home {
+    max-width: 470px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top:470px;
+}
+
+.content-home p {
+    font-family: 'gotham-light', Arial, Helvetica, sans-serif;
+    color: #000;
+    text-align: center;
+    font-size: 15px;
+    padding-bottom: 30px;
+}
+.content-home a{
+    text-align: center;
+    font-family: 'gothamBook', Arial, Helvetica, sans-serif;
+    font-style: italic;
+    color: #fff;
+    display: inline-block;
+    padding:8px 54px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    text-transform: uppercase;
+}
+.content-home a:hover{
+    background-color: #fff;
+    border: 1px solid #fff;
+    color: #8ca410;
+}
+
+#videos{
+    height:100%;
+}
+#videos iframe{
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+#video_controllers{
+    text-align:center;
+    z-index:1000;
+    position:relative;
+    width:100%;
+    height:30px;
+    top:-30px;
+}
+#video_controllers button.active
+{
+    font-size: 17px;
+    font-weight:bold;
+}
+#video_controllers button
+{
+    font-size: 14px;
+    margin-right:5px;
+}
+#twitts
+{
+    z-index:3000;
+    position:absolute;
+    width:256px;
+    height:100%;
+    right:-256px;
+}
+#twitts .ttitle
+{
+    width:100%;
+    background:black;
+    color:white;
+    text-align: center;
+    height:60px;
+}
+#twitts .opener
+{
+    position:absolute;
+    left:-35px;
+}
+#twitts .tbody
+{
+    background:black;
+    height:100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#video_controllers button{
+    width:50px;
+}
+
+#wf{
+    width:100%;
+    height:50px;
+}
+
+.box{
+    width:120px;
+    height:120px;
+    float:left;
+    background:#F33;
+    margin:5px;
+}
+#slideshow {
+    overflow: hidden;
+}
+
+.cursor {
+    position: absolute;
+    width: 182px;
+    height: 100%;
+    border: 3px solid #444;
+}
+
+#slideshow {
+    width: 720px;
+    height: 100%;
+    overflow: hidden;
+    background:black;
+}
+#slideshow .handle {
+    width: 2880px;
+    height: 100%;
+}
+#slideshow .handle .slide {
+    float: left;
+    width: 720px;
+    height: 640px;
+}
+#hl{
+    text-align: center;
+    font-size: 80px;
+    color:white;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1000;
+}
+
+/* lineup */
+#scroll-content li
+{
+    width:320px;
+    height:320px;
+    display:block;
+}
+
+#scroll-content li a{
+    opacity:.3;
+}
+
+#infobox{
+    position:absolute;
+    height:320px;
+    width:256px;
+    background:#55FF55;
+    display:block;
+    z-index:10;
+}
+/* Scroll bar */
+
+.scroll{
+    float:right;
+}
+#scroll-bar {
+    width: 10px;
+    height: 100%;
+    background:#333;
+    border: 1px #222 solid;
+}
+#scroll-bar .handle {
+    width: 10px;
+    height: 54px;
+    position: absolute;
+    background:#5F5;
+    top:0;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+#scroll-mask {
+    width: 566px;
+    height: 100%;
+    /*background: #F8F8F8;*/
+    overflow: hidden;
+    margin:auto;
+}
+#scroll-content {
+    padding: 10px;
+}
+
+#scroll-content  li{
+    display: inline-block;   /* You can also add some margins here to make it look prettier */
+    display:inline;
+    zoom:1;
+}
+#scroll-content li img{
+    width:256px;
+}
+
+/* MENU OVERRIDE */
+
+.meny-left .meny-arrow {
+    width:110px;
+    height: 118px;
+    top: 30px;
+    border:none;
+    cursor: pointer;
+    display: block;
+}
+.meny-left .meny-arrow img{
+    width: 100%;
+}
+.meny ul li{
+    margin-bottom: 10px;
+}
+.meny ul li h2 a{
+    font-family: "gothamMedium" , Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color:#808080;
+    letter-spacing: 1px;
+    padding-left:30px;
+    padding-left:30px;
+    display:block;
+}
+.meny ul li h2 a span{
+    background: url(../images/buttons/sprite-menu.png) no-repeat -7px -1px;
+    background-size:180px 143px;
+    width: 22px;
+    height: 20px;
+    display: inline-block;
+}
+
+.meny ul li h2 a:hover{
+    color:#b6d714;
+}
+.meny ul li.active h2 a{
+    color: #fff;
+}
+.meny ul li.active h2 a{
+    color: #fff;
+}
+.meny ul li.inactive h2 a{
+    color: #282828;
+}
+
+.meny ul li h2 a.live_btn span{
+    background-position: -105px -1px;
+}
+.meny ul li h2 a.live_btn:hover span{
+    background-position: -152px -1px;
+}
+.meny ul li.inactive h2 a.live_btn span, .meny ul li.inactive h2 a.live_btn:hover span{
+    background-position: -7px -1px;
+}
+.meny ul li.active h2 a.live_btn span, .meny ul li.active h2 a.live_btn:hover span{
+    background-position: -56px -1px;
+}
+
+
+.meny ul li h2 a.thewall_btn span{
+    background-position: -105px -31px;
+}
+.meny ul li h2 a.thewall_btn:hover span{
+    background-position: -152px -31px;
+}
+.meny ul li.inactive h2 a.thewall_btn span, .meny ul li.inactive h2 a.thewall_btn:hover span{
+    background-position: -7px -31px;
+}
+.meny ul li.active h2 a.thewall_btn span, .meny ul li.active h2 a.thewall_btn:hover span{
+    background-position: -56px -31px;
+}
+
+
+
+.meny ul li h2 a.lineup_btn span{
+    background-position: -105px -61px;
+}
+.meny ul li h2 a.lineup_btn:hover span{
+    background-position: -152px -61px;
+}
+.meny ul li.inactive h2 a.lineup_btn span, .meny ul li.inactive h2 a.lineup_btn:hover span{
+    background-position: -7px -61px;
+}
+.meny ul li.active h2 a.lineup_btn span, .meny ul li.active h2 a.lineup_btn:hover span{
+    background-position: -56px -61px;
+}
+
+
+.meny ul li h2 a.about_btn span{
+    background-position: -105px -91px;
+}
+.meny ul li h2 a.about_btn:hover span{
+    background-position: -152px -91px;
+}
+.meny ul li.inactive h2 a.about_btn span, .meny ul li.inactive h2 a.about_btn:hover span{
+    background-position: -7px -91px;
+}
+.meny ul li.active h2 a.about_btn span, .meny ul li.active h2 a.about_btn:hover span{
+    background-position: -56px -91px;
+}
+
+
+.meny ul li h2 a.share_btn span{
+    background-position: -105px -121px;
+}
+.meny ul li h2 a.share_btn:hover span{
+    background-position: -152px -121px;
+}
+.meny ul li.inactive h2 a.share_btn span, .meny ul li.inactive h2 a.share_btn:hover span{
+    background-position: -7px -121px;
+}
+.meny ul li.active h2 a.share_btn span, .meny ul li.active h2 a.share_btn:hover span{
+    background-position: -56px -121px;
+}
+
+
+.meny {
+    background-color: #000000;
+    position: relative;
+    z-index: 1100;
+}
+/* END MENU OVERRIDE */
