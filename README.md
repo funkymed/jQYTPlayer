@@ -2,6 +2,10 @@
 
 YT-Player is a player that will display a Youtube chromless fullscreen player, and manager to fade between many videos.
 
+Demo : http://www.cyrilpereira.com/yt-player
+
+GitHub : http://github.com/funkymed/yt-player
+
 ##How to use
 
 HTML
