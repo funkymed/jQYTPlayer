@@ -1,17 +1,17 @@
-#YT-Player
+#jQYTPlayer
 
 jQYTPlayer is a player that will display a Youtube player you can customize.
 
-Demo : http://www.cyrilpereira.com/yt-player
+Demo : http://www.cyrilpereira.com/jQYTPlayer
 
-GitHub : http://github.com/funkymed/yt-player
+GitHub : http://github.com/funkymed/jQYTPlayer
 
 ##Documentation
 
 ###How to use
 
 ~~~
-$('#videos').YTPlayer('mxfmxi-boyo');
+$('#videos').jQYTPlayer('mxfmxi-boyo');
 ~~~
 
 ###Options
@@ -29,7 +29,7 @@ var options = {
   policy:3,     // 1 or 3
   rel:0         // 0 or 1 Display related video at the end
 };
-$('#videos').YTPlayer('mxfmxi-boyo', options);
+$('#videos').jQYTPlayer('mxfmxi-boyo', options);
 ~~~
 
 ###Interface
