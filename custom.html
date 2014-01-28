@@ -1,0 +1,89 @@
+<html>
+<head>
+  <title>jQYTPlayer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+  <script type="text/javascript" src="js/jQYTPlayer.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+
+<img src="images/gif-load.gif" class="loader" />
+<div class="content">
+  <h1>jQYTPlayer</h1>
+  <h2 class="title">loading...</h2>
+  <div id="video"></div>
+  <div class="btn">
+    <button>Play</button>
+    <button>Pause</button>
+    <button>Stop</button>
+  </div>
+  <div class="progress">
+    <div class="bar"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+    var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
+      width:640,
+      height:360,
+      showinfo:false,
+      controls:false,
+      autoplay:false,
+      loop:true
+    });
+    player.onPlaying=function()
+    {
+      $('.progress .bar').width(this.getProgress()+'%');
+    };
+    player.onReadyCallback=function()
+    {
+      $('.title').html(this.data.title);
+    };
+    player.loader=$('.loader');
+
+    $('button').on('click',function()
+    {
+      switch($(this).html())
+      {
+        case 'Play':
+          player.play();
+          break;
+        case 'Pause':
+          player.pause();
+          break;
+        case 'Stop':
+          player.stop();
+          break;
+      }
+    });
+  });
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-944839-15']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>

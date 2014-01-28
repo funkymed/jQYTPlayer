@@ -1,14 +1,16 @@
 /**
- * @param id of
+ * jQYTPlayer
+ * @param id
  * @param code
- * @constructor
+ * @param options
  */
-var jQYTPlayer = function(id,code, options){
+var jQYTPlayer = function(id, code, options){
   this.code = code;
   this.id = id;
+
   this.options={
-    width:300,
-    height:200,
+    width:640,
+    height:360,
     loop:false,
     autoplay:'0',
     controls:'0',
@@ -28,38 +30,49 @@ var jQYTPlayer = function(id,code, options){
         this.options[b] = options[b];
     }
   }
-
-  this.onYTReady();
+  this.loadData();
 };
 
 jQYTPlayer.prototype = {
+  currentTime:0,
   videoId:null,
   code:null,
+  data:null,
   btnClass:null,
   yt:null,
   ready:false,
   paused:false,
-  youtubecode:'',
   iframe:null,
   timer:null,
-  option:{},
+  options:{},
   date:null,
   duration:0,
-  onPlay:null,
   onPause:null,
+  onPlay:null,
+  onStop:null,
+  onPlaying:null,
   onReadyCallback:null,
+  onStateChangeCallback:null,
   onEnd:null,
+  onBufferize:null,
+  loadData:function()
+  {
+    $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+this.code+'?v=2&alt=jsonc',
+        $.proxy(this.processData, this
+        )
+    );
+  },
+  processData:function(json)
+  {
+    this.data = json.data;
+    this.onYTReady();
+  },
   onYTReady:function()
   {
     if(!youtubePlayerReady)
     {
       setTimeout($.proxy(this.onYTReady, this), 300);
     }else{
-
-      this.loader(false);
-
-      this.date = new Date().getTime();
-
       this.yt = new YT.Player(this.id, {
         videoId: this.code,
         width: this.options.width,
@@ -71,12 +84,11 @@ jQYTPlayer.prototype = {
           'autoplay': this.options.autoplay,
           'enablejsapi': 0,
           'start':this.options.start,
-          'theme':this.options.dark,
+          'theme':this.options.theme,
           'iv_load_policy':this.options.policy,
           'wmode':'transparent',
           'rel':this.options.rel
         },
-
         events: {
           'onReady': $.proxy(this.onReady, this),
           'onStateChange': $.proxy(this.onStateChange, this)
@@ -89,6 +101,7 @@ jQYTPlayer.prototype = {
   onReady:function()
   {
     this.ready = true;
+    this.timer = setInterval($.proxy(this.follower, this), 1000);
     if(typeof this.onReadyCallback == 'function')
     {
 
@@ -101,13 +114,19 @@ jQYTPlayer.prototype = {
     {
       case YT.PlayerState.BUFFERING:
       case YT.PlayerState.CUED:
-        this.loader(true);
+        this.loading(true);
+        if(typeof this.onBufferize =='function')
+        {
+          this.onBufferize();
+        }
         break;
       case YT.PlayerState.ENDED:
         if(this.options.loop=='1')
         {
           this.seekTo(0);
           this.play();
+        }else{
+          this.stop();
         }
         if(typeof this.onEnd =='function')
         {
@@ -123,13 +142,16 @@ jQYTPlayer.prototype = {
         break;
       case YT.PlayerState.PLAYING:
         this.paused = false;
+        this.loading(false);
         if(typeof this.onPlay =='function')
         {
           this.onPlay();
         }
-        this.loader(false);
         break;
     }
+
+    if(typeof this.onStateChangeCallback == 'function')
+      this.onStateChangeCallback();
   },
   pause:function()
   {
@@ -140,7 +162,7 @@ jQYTPlayer.prototype = {
   {
     if(this.ready)
     {
-      this.loader(true);
+      this.loading(true);
       if(code)
       {
         this.yt.loadVideoById(code);
@@ -149,26 +171,19 @@ jQYTPlayer.prototype = {
       }
     }
   },
-  loader:function(s)
-  {/*
-   if($('.loader').length)
-   {
-   if(s)
-   {
-   $('.loader').fadeIn('fast');
-   var scope= this;
-   clearTimeout(this.timeout);
-   this.timeout = setTimeout(function()
-   {
-   scope.loader(false);
-   },10000);
-   }else{
-   $('.loader').fadeOut('fast');
-   }
-   }
-   */
+  stop:function()
+  {
+    if(this.ready)
+    {
+      this.seekTo(0);
+      this.pause();
+      if(typeof this.onStop =='function')
+      {
+        this.onStop();
+      }
+    }
   },
-  volume:function(v)
+  setVolume:function(v)
   {
     if(this.ready)
       this.yt.setVolume(v);
@@ -177,6 +192,29 @@ jQYTPlayer.prototype = {
   {
     if(this.ready)
       this.yt.seekTo(to);
+  },
+  follower:function()
+  {
+    this.data.currentTime = this.yt.getCurrentTime();
+    if(typeof this.onPlaying == 'function')
+    {
+      this.onPlaying();
+    }
+  },
+  getProgress:function()
+  {
+    return Math.round(this.data.currentTime/this.data.duration*100);
+  },
+  loading:function(b)
+  {
+    if(b)
+    {
+      if($(this.loader).length)
+        $(this.loader).show();
+    }else{
+      if($(this.loader).length)
+        $(this.loader).hide();
+    }
   }
 };
 
@@ -190,5 +228,6 @@ jQuery.fn.extend({
   jQYTPlayer: function(code,options){
     var _jQ = new jQYTPlayer($(this).attr('id'), code, options);
     $(window).on('resize', $.proxy(_jQ.onResize, _jQ));
+    return _jQ;
   }
 });

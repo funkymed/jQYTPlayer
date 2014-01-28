@@ -1,6 +1,33 @@
 html,body {
-    background: gray;
+    background: #0066AA;
     margin:0;
     padding:0;
+    font-family: Arial;
+    font-size: 12px;
+    color:white;
 }
 
+h1{
+    color:#ffbb00;
+    margin-top:50px;
+}
+
+.content{
+    text-align: center;
+}
+.progress{
+    width:100%;
+    background: #00BBFF;
+}
+.progress .bar{
+    width:0;
+    height:5px;
+    background:#ffbb00;
+}
+
+.loader{
+    position: absolute;
+    right:0;
+    top:0;
+    display:none;
+}
