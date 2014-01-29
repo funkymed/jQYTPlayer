@@ -41,6 +41,7 @@
       autoplay:true,
       loop:true
     });
+
     player.onPlaying=function()
     {
       $('.progress .bar').width(this.getProgress()+'%');
@@ -50,7 +51,7 @@
     $('button').on('click',function(e)
     {
       e.preventDefault();
-      console.debug($(this).html())
+      
       switch($(this).html())
       {
         case 'Play':
@@ -78,6 +79,7 @@
     });
     player.onReadyCallback=function()
     {
+    //this.yt.setPlaybackQuality('hd720');
       $('.title').html(this.data.title);
       var scope = this;
       setTimeout(function()
