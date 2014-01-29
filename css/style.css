@@ -31,3 +31,11 @@ h1{
     top:0;
     display:none;
 }
+#controllers button{
+}
+
+a{
+    font-weight: bold;
+    text-decoration: none;
+    color:#FF5555;
+}
