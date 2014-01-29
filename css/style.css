@@ -26,9 +26,6 @@ h1{
 }
 
 .loader{
-    position: absolute;
-    right:0;
-    top:0;
     display:none;
 }
 #controllers button{

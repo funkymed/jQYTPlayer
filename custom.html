@@ -5,15 +5,15 @@
   <link rel="stylesheet" href="css/style.css" type="text/css" />
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+  <script type="text/javascript" src="js/jQFullscreen.js"></script>
   <script type="text/javascript" src="js/jQYTPlayer.js"></script>
 </head>
-<body>
+<body style="overflow: hidden;">
 
-<img src="images/gif-load.gif" class="loader" />
-<div class="content">
+
+<div class="content" style="position:relative;z-index:1000;">
   <h1>jQYTPlayer</h1>
   <h2 class="title">loading...</h2>
-  <div id="video"></div>
   <div class="btn">
     <button>Play</button>
     <button>Pause</button>
@@ -22,26 +22,25 @@
   <div class="progress">
     <div class="bar"></div>
   </div>
+  <img src="images/gif-load.gif" class="loader" />
 </div>
+
+<div id="video" style="z-index: 1;"></div>
 
 <script type="text/javascript">
   $(document).ready(function()
   {
-    var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
+    var player = $('#video').jQYTPlayer('g3TRZamP85c',{
       width:640,
       height:360,
       showinfo:false,
       controls:false,
-      autoplay:false,
+      autoplay:true,
       loop:true
     });
     player.onPlaying=function()
     {
       $('.progress .bar').width(this.getProgress()+'%');
-    };
-    player.onReadyCallback=function()
-    {
-      $('.title').html(this.data.title);
     };
     player.loader=$('.loader');
 
@@ -60,6 +59,15 @@
           break;
       }
     });
+    player.onReadyCallback=function()
+    {
+      $('.title').html(this.data.title);
+      var scope = this;
+      setTimeout(function()
+      {
+        $(scope.iframe).jQFullscreen({fade:3000,width:1280,height:720});
+      },300);
+    };
   });
 </script>
 
