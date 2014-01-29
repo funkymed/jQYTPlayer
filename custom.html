@@ -16,9 +16,11 @@
   <h1>jQYTPlayer</h1>
   <h2 class="title">loading...</h2>
   <div class="btn">
+    <button>&lt;&lt;</button>
     <button>Play</button>
     <button>Pause</button>
     <button>Stop</button>
+    <button>&gt;&gt;</button>
   </div>
   <div class="progress">
     <div class="bar"></div>
@@ -45,8 +47,10 @@
     };
     player.loader=$('.loader');
 
-    $('button').on('click',function()
+    $('button').on('click',function(e)
     {
+      e.preventDefault();
+      console.debug($(this).html())
       switch($(this).html())
       {
         case 'Play':
@@ -57,6 +61,18 @@
           break;
         case 'Stop':
           player.stop();
+          break;
+        case '&lt;&lt;':
+          var prev=player.data.currentTime-10;
+          if(prev<0)
+            prev=0;
+          player.seekTo(prev);
+          break;
+        case '&gt;&gt;':
+          var next=player.data.currentTime+10;
+          if(next>player.data.duration)
+            next=0;
+          player.seekTo(next);
           break;
       }
     });
