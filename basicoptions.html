@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
 
   <script type="text/javascript" src="javascripts/modernizr.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -17,7 +18,9 @@
       $('#main_content').headsmart()
     })
   </script>
-  <title>Jqytplayer by funkymed</title>
+  <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+  <script type="text/javascript" src="javascripts/jQYTPlayer.js"></script>
+  <title>Jqytplayer by funkymed - Basic options</title>
 </head>
 
 <body>
@@ -45,77 +48,37 @@
 
   <section id="main_content">
 
-    <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Documentation</h3>
+    <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Simple</h3>
 
-    <strong>How to use ?</strong>
-    <pre><code>$('#videos').jQYTPlayer('mxfmxi-boyo');</code></pre>
+    <div class="content">
+      <div id="video"></div>
+    </div>
 
-    <strong>Options</strong>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('#video').jQYTPlayer('mxfmxi-boyo',{
+              width:500,
+              height:300,
+              theme:'light',
+              controls:true,
+              loop:true,
+              start:128
+            });
+        });
+    </script>
 
-<pre><code>var options = {
-  width:300,
-  height:200,
-  loop:false,
-  autoplay:true,
+
+<pre><code>$('#video').jQYTPlayer('mxfmxi-boyo',{
+  width:500,
+  height:300,
+  theme:'light',
   controls:true,
-  showinfo:true,
-  theme:'dark', // dark or light
-  start:0,      // where the video start
-  policy:3,     // 1 or 3
-  rel:0         // 0 or 1 Display related video at the end
-};
-$('#videos').jQYTPlayer('mxfmxi-boyo', options);
+  loop:true,
+  start:128
+});
 </code></pre>
-
-    <strong>Custom Player</strong>
-    <p>Loader</p>
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.loader = $('.loader');
-</code></pre>
-
-    <strong>Actions</strong>
-
-    <p>Player Action</p>
-
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.play();
-player.stop();
-player.pause();
-</code></pre>
-
-    <p>Get Progression</p>
-
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.onPlaying=function()
-{
-  var pourcent = this.getProgress();
-};
-</code></pre>
-
-    <strong>Callback</strong>
-
-    <p>fire callback when ...</p>
-<pre><code>onPause               // video is paused
-onPlay                // video is played
-onStop                // video is stoppped
-onPlaying             // video is playing
-onReadyCallback       // player is ready
-onLoadDataCallback    // player load data
-onStateChangeCallback // player state changed
-onEnd                 // video is finished
-onBufferize           // player is bufferring
-</code></pre>
-
-    <h3><a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
-
-    <p>Here are examples that i hope will help you.</p>
-    <a href="simple.html">Simple</a><br />
-    <a href="basicoptions.html">Basic Options</a><br />
-    <a href="custom.html">Custom Player</a><br />
-    <a href="multiplayer.html">Multi Player</a><br />
-
-  </section>
-
+</section>
   <footer>
         <span class="ribbon-outer">
           <span class="ribbon-inner">

@@ -1,0 +1,24 @@
+.content{
+    text-align: center;
+}
+.progress{
+    width:100%;
+    background: #cac1b5;
+}
+.progress .bar{
+    width:0;
+    height:5px;
+    background:#7c334f;
+}
+
+.loader{
+    position: absolute;
+    right:0;
+    top:150px;
+    display:none;
+    border:0;
+    box-shadow:none;
+}
+.btn{
+    text-align: left;
+}

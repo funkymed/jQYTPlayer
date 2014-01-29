@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
 
   <script type="text/javascript" src="javascripts/modernizr.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -17,7 +18,11 @@
       $('#main_content').headsmart()
     })
   </script>
-  <title>Jqytplayer by funkymed</title>
+
+  <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+  <script type="text/javascript" src="javascripts/jQYTPlayer.js"></script>
+
+  <title>Jqytplayer by funkymed - Custom Player</title>
 </head>
 
 <body>
@@ -45,74 +50,95 @@
 
   <section id="main_content">
 
-    <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Documentation</h3>
+    <h3><a name="doc" class="anchor" href="#title"><span class="octicon octicon-link"></span></a>Custom Player</h3>
 
-    <strong>How to use ?</strong>
-    <pre><code>$('#videos').jQYTPlayer('mxfmxi-boyo');</code></pre>
+    <div class="content">
+      <h1>jQYTPlayer</h1>
+      <h2 class="title">loading...</h2>
+      <img src="images/gif-load.gif" class="loader" />
+      <div id="video"></div>
+      <div class="progress"><div class="bar"></div></div>
+      <div class="btn">
+        <button>Play</button>
+        <button>Pause</button>
+        <button>Stop</button>
+      </div>
 
-    <strong>Options</strong>
+    </div>
 
-<pre><code>var options = {
-  width:300,
-  height:200,
-  loop:false,
-  autoplay:true,
-  controls:true,
-  showinfo:true,
-  theme:'dark', // dark or light
-  start:0,      // where the video start
-  policy:3,     // 1 or 3
-  rel:0         // 0 or 1 Display related video at the end
-};
-$('#videos').jQYTPlayer('mxfmxi-boyo', options);
-</code></pre>
+    <script type="text/javascript">
+      $(document).ready(function()
+      {
+        var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
+          width:500,
+          height:360,
+          showinfo:false,
+          controls:false,
+          autoplay:false,
+          loop:true
+        });
+        player.onPlaying=function()
+        {
+          $('.progress .bar').width(this.getProgress()+'%');
+        };
+        player.onReadyCallback=function()
+        {
+          $('.title').html(this.data.title);
+        };
+        player.loader=$('.loader');
 
-    <strong>Custom Player</strong>
-    <p>Loader</p>
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.loader = $('.loader');
-</code></pre>
+        $('button').on('click',function()
+        {
+          switch($(this).html())
+          {
+            case 'Play':
+              player.play();
+              break;
+            case 'Pause':
+              player.pause();
+              break;
+            case 'Stop':
+              player.stop();
+              break;
+          }
+        });
+      });
+    </script>
 
-    <strong>Actions</strong>
-
-    <p>Player Action</p>
-
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.play();
-player.stop();
-player.pause();
-</code></pre>
-
-    <p>Get Progression</p>
-
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
+<pre><code>var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
+  width:500,
+  height:360,
+  showinfo:false,
+  controls:false,
+  autoplay:false,
+  loop:true
+});
 player.onPlaying=function()
 {
-  var pourcent = this.getProgress();
+  $('.progress .bar').width(this.getProgress()+'%');
 };
+player.onReadyCallback=function()
+{
+  $('.title').html(this.data.title);
+};
+player.loader=$('.loader');
+
+$('button').on('click',function()
+{
+  switch($(this).html())
+  {
+    case 'Play':
+      player.play();
+      break;
+    case 'Pause':
+      player.pause();
+      break;
+    case 'Stop':
+      player.stop();
+      break;
+  }
+});
 </code></pre>
-
-    <strong>Callback</strong>
-
-    <p>fire callback when ...</p>
-<pre><code>onPause               // video is paused
-onPlay                // video is played
-onStop                // video is stoppped
-onPlaying             // video is playing
-onReadyCallback       // player is ready
-onLoadDataCallback    // player load data
-onStateChangeCallback // player state changed
-onEnd                 // video is finished
-onBufferize           // player is bufferring
-</code></pre>
-
-    <h3><a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
-
-    <p>Here are examples that i hope will help you.</p>
-    <a href="simple.html">Simple</a><br />
-    <a href="basicoptions.html">Basic Options</a><br />
-    <a href="custom.html">Custom Player</a><br />
-    <a href="multiplayer.html">Multi Player</a><br />
 
   </section>
 
