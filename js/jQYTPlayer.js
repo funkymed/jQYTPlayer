@@ -184,7 +184,14 @@ jQYTPlayer.prototype = {
   {
     if(this.ready)
     {
-      this.yt.stopVideo();
+      this.seekTo(0);
+      var _yt = this.yt;
+      setTimeout(function()
+      {
+        if(_yt)
+          _yt.stopVideo();
+      },100);
+
       if(typeof this.onStop =='function')
       {
         this.onStop();
