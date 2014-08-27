@@ -1,4 +1,5 @@
 /**
+ * Author : Cyril Pereira <cyril.pereira@gmail.com>
  * jQYTPlayer
  * @param id
  * @param code
@@ -183,8 +184,7 @@ jQYTPlayer.prototype = {
   {
     if(this.ready)
     {
-      this.seekTo(0);
-      this.pause();
+      this.yt.stopVideo();
       if(typeof this.onStop =='function')
       {
         this.onStop();
