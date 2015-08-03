@@ -38,7 +38,7 @@ jQYTPlayer.prototype = {
   currentTime:0,
   videoId:null,
   code:null,
-  data:null,
+  data:{currentTime:0,duration:0},
   btnClass:null,
   yt:null,
   ready:false,
@@ -60,7 +60,15 @@ jQYTPlayer.prototype = {
   loadData:function(onlyupdate)
   {
     this.onlyupdate = onlyupdate ? true : false;
-    $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+this.code+'?v=2&alt=jsonc',$.proxy(this.processData, this));
+    if(!this.onlyupdate)
+      this.onYTReady();
+
+    if(typeof this.onLoadDataCallback == 'function')
+    {
+      this.onLoadDataCallback();
+    }
+
+    //$.getJSON('http://gdata.youtube.com/feeds/api/videos/'+this.code+'?v=2&alt=jsonc',$.proxy(this.processData, this));
   },
   processData:function(json)
   {
@@ -210,7 +218,8 @@ jQYTPlayer.prototype = {
   },
   follower:function()
   {
-    this.data.currentTime = this.yt.getCurrentTime();
+    this.data.currentTime = this.yt ? this.yt.getCurrentTime() : 0;
+    this.data.duration = this.yt ? this.yt.getDuration() : 0;
     if(typeof this.onPlaying == 'function')
     {
       this.onPlaying();

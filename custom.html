@@ -14,7 +14,6 @@
 <div class="content" style="position:absolute;bottom:40px;width:100%;z-index:1000;">
   <img src="images/gif-load.gif" class="loader" />
   <h1>jQYTPlayer</h1>
-  <h2 class="title">loading...</h2>
   <div class="btn">
     <button>&lt;&lt;</button>
     <button>Play</button>
@@ -80,7 +79,6 @@
     player.onReadyCallback=function()
     {
     //this.yt.setPlaybackQuality('hd720');
-      $('.title').html(this.data.title);
       var scope = this;
       setTimeout(function()
       {

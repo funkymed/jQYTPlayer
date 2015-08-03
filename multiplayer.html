@@ -12,7 +12,6 @@
 
 <div class="content">
   <h1>jQYTPlayer</h1>
-  <h2 class="title">loading...</h2>
   <div>
     <div id="video" ></div>
     <div id="controllers"></div>
@@ -31,10 +30,6 @@
       controls:false,
       loop:false
     });
-    player.onLoadDataCallback=function()
-    {
-      $('.title').html(this.data.title);
-    };
     $(list).each(function(a)
     {
       $('#controllers').append('<button data-yt="'+this+'">#video '+(a+1)+'</button>');
