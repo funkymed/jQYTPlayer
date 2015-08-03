@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=640" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
 
-  <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
 
-  <script type="text/javascript" src="javascripts/modernizr.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('#main_content').headsmart()
-    })
-  </script>
-  <title>Jqytplayer by funkymed</title>
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#main_content').headsmart()
+        })
+    </script>
+    <title>Jqytplayer by funkymed</title>
 </head>
 
 <body>
 <a id="forkme_banner" href="https://github.com/funkymed/jQYTPlayer">View on GitHub</a>
 <div class="shell">
 
-  <header>
+    <header>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <h1>Jqytplayer</h1>
@@ -33,100 +33,100 @@
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-  </header>
+    </header>
 
-  <section id="downloads">
+    <section id="downloads">
         <span class="inner">
           <a href="https://github.com/funkymed/jQYTPlayer/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/funkymed/jQYTPlayer/tarball/master" class="tgz"><em>download</em> .TGZ</a>
         </span>
-  </section>
+    </section>
 
-  <span class="banner-fix"></span>
+    <span class="banner-fix"></span>
 
-  <section id="main_content">
+    <section id="main_content">
 
-    <h3><a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h3>
+        <h3><a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h3>
 
-    <p>jQYTPlayer is a fast youtube video player, easy to customize with a lots of callback.</p>
-    <p>Author : Cyril Pereira</p>
-    <p>GitHub : <a href="http://github.com/funkymed/jQYTPlayer">http://github.com/funkymed/jQYTPlayer</a></p>
+        <p>jQYTPlayer is a fast youtube video player, easy to customize with a lots of callback.</p>
+        <p>Author : Cyril Pereira</p>
+        <p>GitHub : <a href="http://github.com/funkymed/jQYTPlayer">http://github.com/funkymed/jQYTPlayer</a></p>
 
-    <h3><a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+        <h3><a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
 
         <p>Here are examples that i hope will help you.</p>
         <p>
-        <a href="simple.html">Simple</a><br />
-        <a href="basicoptions.html">Basic Options</a><br />
-        <a href="custom.html">Custom Player</a><br />
-        <a href="multiplayer.html">Multi Player</a>
+            <a href="simple.html">Simple</a><br />
+            <a href="basicoptions.html">Basic Options</a><br />
+            <a href="custom.html">Custom Player</a><br />
+            <a href="multiplayer.html">Multi Player</a>
         </p>
-    
-    <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Documentation</h3>
 
-    <strong>How to use ?</strong>
-    <pre><code>$('#videos').jQYTPlayer('mxfmxi-boyo');</code></pre>
+        <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Documentation</h3>
 
-    <strong>Options</strong>
+        <strong>How to use ?</strong>
+        <pre><code>$('#videos').jQYTPlayer('mxfmxi-boyo');</code></pre>
+
+        <strong>Options</strong>
 
 <pre><code>var options = {
-  width:300,
-  height:200,
-  loop:false,
-  autoplay:true,
-  controls:true,
-  showinfo:true,
-  theme:'dark', // dark or light
-  start:0,      // where the video start
-  policy:3,     // 1 or 3
-  rel:0         // 0 or 1 Display related video at the end
-};
-$('#videos').jQYTPlayer('mxfmxi-boyo', options);
+    width:300,
+    height:200,
+    loop:false,
+    autoplay:true,
+    controls:true,
+    showinfo:true,
+    theme:'dark', // dark or light
+    start:0,      // where the video start
+    policy:3,     // 1 or 3
+    rel:0         // 0 or 1 Display related video at the end
+    };
+    $('#videos').jQYTPlayer('mxfmxi-boyo', options);
 </code></pre>
 
-    <strong>Custom Player</strong>
-    <p>Loader</p>
+        <strong>Custom Player</strong>
+        <p>Loader</p>
 <pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.loader = $('.loader');
+    player.loader = $('.loader');
 </code></pre>
 
-    <strong>Actions</strong>
+        <strong>Actions</strong>
 
-    <p>Player Action</p>
-
-<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.play();
-player.stop();
-player.pause();
-</code></pre>
-
-    <p>Get Progression</p>
+        <p>Player Action</p>
 
 <pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.onPlaying=function()
-{
-  var pourcent = this.getProgress();
-};
+    player.play();
+    player.stop();
+    player.pause();
 </code></pre>
 
-    <strong>Callback</strong>
+        <p>Get Progression</p>
 
-    <p>fire callback when ...</p>
+<pre><code>var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
+    player.onPlaying=function()
+    {
+    var pourcent = this.getProgress();
+    };
+</code></pre>
+
+        <strong>Callback</strong>
+
+        <p>fire callback when ...</p>
 <pre><code>onPause               // video is paused
-onPlay                // video is played
-onStop                // video is stoppped
-onPlaying             // video is playing
-onReadyCallback       // player is ready
-onLoadDataCallback    // player load data
-onStateChangeCallback // player state changed
-onEnd                 // video is finished
-onBufferize           // player is bufferring
+    onPlay                // video is played
+    onStop                // video is stoppped
+    onPlaying             // video is playing
+    onReadyCallback       // player is ready
+    onLoadDataCallback    // player load data
+    onStateChangeCallback // player state changed
+    onEnd                 // video is finished
+    onBufferize           // player is bufferring
 </code></pre>
 
 
 
-  </section>
+    </section>
 
-  <footer>
+    <footer>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <p>this project by <a href="https://github.com/funkymed">funkymed</a> can be found on <a href="https://github.com/funkymed/jQYTPlayer">GitHub</a></p>
@@ -134,21 +134,21 @@ onBufferize           // player is bufferring
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-    <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-    <span class="octocat"></span>
-  </footer>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+    </footer>
 
 </div>
 
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-944839-15']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-944839-15']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 </body>
