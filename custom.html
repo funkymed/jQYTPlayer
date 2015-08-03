@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=640" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
 
-  <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
 
-  <script type="text/javascript" src="javascripts/modernizr.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('#main_content').headsmart()
-    })
-  </script>
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#main_content').headsmart()
+        })
+    </script>
 
-  <script type="text/javascript" src="//www.youtube.com/player_api"></script>
-  <script type="text/javascript" src="javascripts/jQYTPlayer.js"></script>
+    <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+    <script type="text/javascript" src="javascripts/jQYTPlayer.js"></script>
 
-  <title>Jqytplayer by funkymed - Custom Player</title>
+    <title>Jqytplayer by funkymed - Custom Player</title>
 </head>
 
 <body>
 <a id="forkme_banner" href="https://github.com/funkymed/jQYTPlayer">View on GitHub</a>
 <div class="shell">
 
-  <header>
+    <header>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <h1>Jqytplayer</h1>
@@ -38,106 +38,111 @@
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-  </header>
+    </header>
 
-  <section id="downloads">
+    <section id="downloads">
         <span class="inner">
           <a href="https://github.com/funkymed/jQYTPlayer/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/funkymed/jQYTPlayer/tarball/master" class="tgz"><em>download</em> .TGZ</a>
         </span>
-  </section>
+    </section>
 
-  <span class="banner-fix"></span>
+    <span class="banner-fix"></span>
 
-  <section id="main_content">
+    <section id="main_content">
 
-    <h3><a name="doc" class="anchor" href="#title"><span class="octicon octicon-link"></span></a>Custom Player</h3>
+        <h3><a name="doc" class="anchor" href="#title"><span class="octicon octicon-link"></span></a>Custom Player</h3>
 
-    <div class="content">
-      <h1>jQYTPlayer</h1>
-      <img src="images/gif-load.gif" class="loader" />
-      <div id="video"></div>
-      <div class="progress"><div class="bar"></div></div>
-      <div class="btn">
-        <button>Play</button>
-        <button>Pause</button>
-        <button>Stop</button>
-      </div>
+        <div class="content">
+            <h1>jQYTPlayer</h1>
+            <h2 class="title">loading...</h2>
+            <img src="images/gif-load.gif" class="loader" />
+            <div id="video"></div>
+            <div class="progress"><div class="bar"></div></div>
+            <div class="btn">
+                <button>Play</button>
+                <button>Pause</button>
+                <button>Stop</button>
+            </div>
 
-    </div>
+        </div>
 
-    <script type="text/javascript">
-      $(document).ready(function()
-      {
-        var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
-          width:500,
-          height:360,
-          showinfo:false,
-          controls:false,
-          autoplay:false,
-          loop:true
-        });
-        player.onPlaying=function()
-        {
-          $('.progress .bar').width(this.getProgress()+'%');
-        };
-        player.loader=$('.loader');
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
+                    width:500,
+                    height:360,
+                    showinfo:false,
+                    controls:false,
+                    autoplay:false,
+                    loop:true
+                });
+                player.onPlaying=function()
+                {
+                    $('.progress .bar').width(this.getProgress()+'%');
+                };
+                player.onReadyCallback=function()
+                {
+                    $('.title').html(this.data.title);
+                };
+                player.loader=$('.loader');
 
-        $('button').on('click',function()
-        {
-          switch($(this).html())
-          {
-            case 'Play':
-              player.play();
-              break;
-            case 'Pause':
-              player.pause();
-              break;
-            case 'Stop':
-              player.stop();
-              break;
-          }
-        });
-      });
-    </script>
+                $('button').on('click',function()
+                {
+                    switch($(this).html())
+                    {
+                        case 'Play':
+                            player.play();
+                            break;
+                        case 'Pause':
+                            player.pause();
+                            break;
+                        case 'Stop':
+                            player.stop();
+                            break;
+                    }
+                });
+            });
+        </script>
 
 <pre><code>var player = $('#video').jQYTPlayer('mxfmxi-boyo',{
-  width:500,
-  height:360,
-  showinfo:false,
-  controls:false,
-  autoplay:false,
-  loop:true
-});
-player.onPlaying=function()
-{
-  $('.progress .bar').width(this.getProgress()+'%');
-};
-player.onReadyCallback=function()
-{
-  $('.title').html(this.data.title);
-};
-player.loader=$('.loader');
+    width:500,
+    height:360,
+    showinfo:false,
+    controls:false,
+    autoplay:false,
+    loop:true
+    });
+    player.onPlaying=function()
+    {
+    $('.progress .bar').width(this.getProgress()+'%');
+    };
+    player.onReadyCallback=function()
+    {
+    $('.title').html(this.data.title);
+    };
+    player.loader=$('.loader');
 
-$('button').on('click',function()
-{
-  switch($(this).html())
-  {
+    $('button').on('click',function()
+    {
+    switch($(this).html())
+    {
     case 'Play':
-      player.play();
-      break;
+    player.play();
+    break;
     case 'Pause':
-      player.pause();
-      break;
+    player.pause();
+    break;
     case 'Stop':
-      player.stop();
-      break;
-  }
-});
+    player.stop();
+    break;
+    }
+    });
 </code></pre>
 
-  </section>
+    </section>
 
-  <footer>
+    <footer>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <p>this project by <a href="https://github.com/funkymed">funkymed</a> can be found on <a href="https://github.com/funkymed/jQYTPlayer">GitHub</a></p>
@@ -145,21 +150,21 @@ $('button').on('click',function()
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-    <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-    <span class="octocat"></span>
-  </footer>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+    </footer>
 
 </div>
 
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-944839-15']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-944839-15']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 </body>

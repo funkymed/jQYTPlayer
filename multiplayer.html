@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=640" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
 
-  <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
 
-  <script type="text/javascript" src="javascripts/modernizr.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('#main_content').headsmart()
-    })
-  </script>
-  <script type="text/javascript" src="//www.youtube.com/player_api"></script>
-  <script type="text/javascript" src="javascripts/jQYTPlayer.js"></script>
-  <title>Jqytplayer by funkymed - Basic options</title>
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#main_content').headsmart()
+        })
+    </script>
+    <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+    <script type="text/javascript" src="javascripts/jQYTPlayer.js"></script>
+    <title>Jqytplayer by funkymed - Basic options</title>
 </head>
 
 <body>
 <a id="forkme_banner" href="https://github.com/funkymed/jQYTPlayer">View on GitHub</a>
 <div class="shell">
 
-  <header>
+    <header>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <h1>Jqytplayer</h1>
@@ -36,74 +36,79 @@
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-  </header>
+    </header>
 
-  <section id="downloads">
+    <section id="downloads">
         <span class="inner">
           <a href="https://github.com/funkymed/jQYTPlayer/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/funkymed/jQYTPlayer/tarball/master" class="tgz"><em>download</em> .TGZ</a>
         </span>
-  </section>
+    </section>
 
-  <span class="banner-fix"></span>
+    <span class="banner-fix"></span>
 
-  <section id="main_content">
+    <section id="main_content">
 
-    <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Simple</h3>
+        <h3><a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>Simple</h3>
 
-    <div class="content">
-      <div>
-        <div id="video" ></div>
-        <div id="controllers"></div>
-      </div>
-    </div>
+        <div class="content">
+            <h2 class="title">loading...</h2>
+            <div>
+                <div id="video" ></div>
+                <div id="controllers"></div>
+            </div>
+        </div>
 
-    <script type="text/javascript">
-      $(document).ready(function()
-      {
-        var list = ['mxfmxi-boyo','jB0vBmiTr6o','rNqpD3Mg9hY','YQ1uDEbhWO8','RPdB_zdyMbM','w9y8Lv_sSFw'];
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                var list = ['mxfmxi-boyo','jB0vBmiTr6o','rNqpD3Mg9hY','YQ1uDEbhWO8','RPdB_zdyMbM','w9y8Lv_sSFw'];
 
-        var player = $('#video').jQYTPlayer(list[0],{
-          width:500,
-          height:300,
-          theme:'light',
-          controls:false,
-          loop:false
-        });
-        $(list).each(function(a)
-        {
-          $('#controllers').append('<button data-yt="'+this+'">#video '+(a+1)+'</button>');
-          $('#controllers button:last-child').on('click',function()
-          {
-            player.play($(this).data('yt'));
-          });
-        });
-      });
-    </script>
+                var player = $('#video').jQYTPlayer(list[0],{
+                    width:500,
+                    height:300,
+                    theme:'light',
+                    controls:false,
+                    loop:false
+                });
+                player.onLoadDataCallback=function()
+                {
+                    $('.title').html(this.data.title);
+                };
+                $(list).each(function(a)
+                {
+                    $('#controllers').append('<button data-yt="'+this+'">#video '+(a+1)+'</button>');
+                    $('#controllers button:last-child').on('click',function()
+                    {
+                        player.play($(this).data('yt'));
+                    });
+                });
+            });
+        </script>
 
 <pre><code>var list = ['mxfmxi-boyo','jB0vBmiTr6o','rNqpD3Mg9hY','YQ1uDEbhWO8','RPdB_zdyMbM','w9y8Lv_sSFw'];
 
-var player = $('#video').jQYTPlayer(list[0],{
-  width:500,
-  height:300,
-  theme:'light',
-  controls:false,
-  loop:false
-});
-player.onLoadDataCallback=function()
-{
-  $('.title').html(this.data.title);
-};
-$(list).each(function(a)
-{
-  $('#controllers').append('&lt;button data-yt="'+this+'">#video '+(a+1)+'&lt;/button>');
-  $('#controllers button:last-child').on('click',function()
-  {
+    var player = $('#video').jQYTPlayer(list[0],{
+    width:500,
+    height:300,
+    theme:'light',
+    controls:false,
+    loop:false
+    });
+    player.onLoadDataCallback=function()
+    {
+    $('.title').html(this.data.title);
+    };
+    $(list).each(function(a)
+    {
+    $('#controllers').append('&lt;button data-yt="'+this+'">#video '+(a+1)+'&lt;/button>');
+    $('#controllers button:last-child').on('click',function()
+    {
     player.play($(this).data('yt'));
-  });
-});
+    });
+    });
 </code></pre>
-</section>
-  <footer>
+    </section>
+    <footer>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <p>this project by <a href="https://github.com/funkymed">funkymed</a> can be found on <a href="https://github.com/funkymed/jQYTPlayer">GitHub</a></p>
@@ -111,21 +116,21 @@ $(list).each(function(a)
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-    <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-    <span class="octocat"></span>
-  </footer>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+    </footer>
 
 </div>
 
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-944839-15']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-944839-15']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 </body>
