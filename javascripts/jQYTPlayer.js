@@ -1,4 +1,5 @@
 /**
+ * Author : Cyril Pereira <cyril.pereira@gmail.com>
  * jQYTPlayer
  * @param id
  * @param code
@@ -37,7 +38,7 @@ jQYTPlayer.prototype = {
   currentTime:0,
   videoId:null,
   code:null,
-  data:null,
+  data:{currentTime:0,duration:0},
   btnClass:null,
   yt:null,
   ready:false,
@@ -59,11 +60,6 @@ jQYTPlayer.prototype = {
   loadData:function(onlyupdate)
   {
     this.onlyupdate = onlyupdate ? true : false;
-    $.getJSON('http://gdata.youtube.com/feeds/api/videos/'+this.code+'?v=2&alt=jsonc',$.proxy(this.processData, this));
-  },
-  processData:function(json)
-  {
-    this.data = json.data;
     if(!this.onlyupdate)
       this.onYTReady();
 
@@ -71,7 +67,6 @@ jQYTPlayer.prototype = {
     {
       this.onLoadDataCallback();
     }
-
   },
   onYTReady:function()
   {
@@ -184,7 +179,13 @@ jQYTPlayer.prototype = {
     if(this.ready)
     {
       this.seekTo(0);
-      this.pause();
+      var _yt = this.yt;
+      setTimeout(function()
+      {
+        if(_yt)
+          _yt.stopVideo();
+      },100);
+
       if(typeof this.onStop =='function')
       {
         this.onStop();
@@ -203,7 +204,8 @@ jQYTPlayer.prototype = {
   },
   follower:function()
   {
-    this.data.currentTime = this.yt.getCurrentTime();
+    this.data.currentTime = this.yt ? this.yt.getCurrentTime() : 0;
+    this.data.duration = this.yt ? this.yt.getDuration() : 0;
     if(typeof this.onPlaying == 'function')
     {
       this.onPlaying();
