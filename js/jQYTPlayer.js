@@ -38,7 +38,7 @@ jQYTPlayer.prototype = {
   currentTime:0,
   videoId:null,
   code:null,
-  data:{currentTime:0,duration:0},
+  data:{currentTime:0,duration:0,title:""},
   btnClass:null,
   yt:null,
   ready:false,
@@ -60,19 +60,6 @@ jQYTPlayer.prototype = {
   loadData:function(onlyupdate)
   {
     this.onlyupdate = onlyupdate ? true : false;
-    if(!this.onlyupdate)
-      this.onYTReady();
-
-    if(typeof this.onLoadDataCallback == 'function')
-    {
-      this.onLoadDataCallback();
-    }
-
-    //$.getJSON('http://gdata.youtube.com/feeds/api/videos/'+this.code+'?v=2&alt=jsonc',$.proxy(this.processData, this));
-  },
-  processData:function(json)
-  {
-    this.data = json.data;
     if(!this.onlyupdate)
       this.onYTReady();
 
@@ -116,15 +103,30 @@ jQYTPlayer.prototype = {
   onReady:function()
   {
     this.ready = true;
+    this.data.title = this.yt.getVideoData().title;
+    this.data.duration = this.yt.getDuration();
+
     this.timer = setInterval($.proxy(this.follower, this), 1000);
     if(typeof this.onReadyCallback == 'function')
     {
-
       this.onReadyCallback();
+    }
+
+    if(typeof this.onLoadDataCallback == 'function')
+    {
+      this.onLoadDataCallback();
     }
   },
   onStateChange:function(a)
   {
+    if(this.yt)
+      this.data.title = this.yt.getVideoData().title;
+
+    if(typeof this.onLoadDataCallback == 'function')
+    {
+      this.onLoadDataCallback();
+    }
+
     switch(a.data)
     {
       case YT.PlayerState.BUFFERING:
@@ -218,8 +220,8 @@ jQYTPlayer.prototype = {
   },
   follower:function()
   {
-    this.data.currentTime = this.yt ? this.yt.getCurrentTime() : 0;
-    this.data.duration = this.yt ? this.yt.getDuration() : 0;
+    this.data.currentTime = this.yt.getCurrentTime();
+    this.data.duration = this.yt.getDuration();
     if(typeof this.onPlaying == 'function')
     {
       this.onPlaying();
