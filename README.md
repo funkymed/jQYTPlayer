@@ -2,7 +2,7 @@
 
 jQYTPlayer is a player that will display a Youtube player you can customize.
 
-Demo : http://www.cyrilpereira.com/jQYTPlayer
+Demo : http://med.planet-d.net/demo/web/jQYTPlayer/
 
 GitHub : http://github.com/funkymed/jQYTPlayer
 
