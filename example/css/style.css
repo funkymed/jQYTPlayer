@@ -36,3 +36,8 @@ a{
     text-decoration: none;
     color:#FF5555;
 }
+
+pre{
+    background: white;
+    width:auto;
+}

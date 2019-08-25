@@ -1,25 +1,66 @@
-#jQYTPlayer
+# Youtube Player
 
-jQYTPlayer is a player that will display a Youtube player you can customize.
+Author : Cyril Pereira
 
-Demo : http://med.planet-d.net/demo/web/jQYTPlayer/
+Control the Youtube Player only by code and without iframe.
+You can custom the player, make your own.
+You can get all the informations, title, length, currentTime and state.
 
-GitHub : http://github.com/funkymed/jQYTPlayer
+## Install
 
-##Documentation
+First of all in your root page of react you will need to add this in your header
+```html
+<head>
+    <script type="text/javascript" src="//www.youtube.com/player_api"></script>
+    <script type="text/javascript">
+        var youtubePlayerReady = false;
+        function onYouTubeIframeAPIReady() {
+            youtubePlayerReady = true;
+        }
+    </script>
+</head>
+```
 
-###How to use
+```bash
+yarn add funkymed-youtube-player --save
+```
 
-~~~
-$('#videos').jQYTPlayer('mxfmxi-boyo');
-~~~
+And in your compennent add those lines in the render
 
-###Options
+```javascript
+render(){
+    return (
+        <div>
+            <YoutubePlayer code="Zrock_tnsSQ" />
+        </div>
+    );
+}
+```
 
-~~~
-var options = {
-  width:300,
-  height:200,
+## Build
+
+```bash
+yarn build
+```
+
+## Test
+
+```bash
+yarn start
+```
+
+in your browser go the url http://localhost:3001/
+
+## Demo
+
+The component in action : http://medcg.free.fr/tmp/npm-youtube-player
+
+## Options
+
+```javascript
+{
+  width:640,
+  height:360,
   loop:false,
   autoplay:true,
   controls:true,
@@ -28,51 +69,7 @@ var options = {
   start:0,      // where the video start
   policy:3,     // 1 or 3
   rel:0         // 0 or 1 Display related video at the end
-};
-$('#videos').jQYTPlayer('mxfmxi-boyo', options);
-~~~
+}
+```
 
-###Custom Player
-
-###Loader
-~~~
-var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.loader = $('.loader');
-~~~
-
-####Action
-
-Player Action
-
-~~~
-var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.play();
-player.stop();
-player.pause();
-~~~
-
-Get Progression
-
-~~~
-var player = $('#videos').jQYTPlayer('mxfmxi-boyo');
-player.onPlaying=function()
-{
-  var pourcent = this.getProgress();
-};
-~~~
-
-####Callback
-
-fire callback when ...
-~~~
-onPause               // video is paused
-onPlay                // video is played
-onStop                // video is stoppped
-onPlaying             // video is playing
-onReadyCallback       // player is ready
-onLoadDataCallback    // player load data
-onStateChangeCallback // player state changed
-onEnd                 // video is finished
-onBufferize           // player is bufferring
-~~~
-
+Check the example to have a full information about implementation
