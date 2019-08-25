@@ -6,6 +6,10 @@ Control the Youtube Player only by code and without iframe.
 You can custom the player, make your own.
 You can get all the informations, title, length, currentTime and state.
 
+## Demo
+
+http://medcg.free.fr/tmp/npm-youtube-player/
+
 ## Install
 
 First of all in your root page of react you will need to add this in your header
