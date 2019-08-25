@@ -6,6 +6,8 @@ Control the Youtube Player only by code and without iframe.
 You can custom the player, make your own.
 You can get all the informations, title, length, currentTime and state.
 
+url of the package npm : https://www.npmjs.com/package/funkymed-youtube-player
+
 ## Demo
 
 http://medcg.free.fr/tmp/npm-youtube-player/
@@ -32,6 +34,10 @@ yarn add funkymed-youtube-player --save
 And in your compennent add those lines in the render
 
 ```javascript
+import 'funkymed-youtube-player/dist/YoutubePlayer'
+
+//...
+
 render(){
     return (
         <div>
