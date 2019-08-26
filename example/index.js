@@ -1,6 +1,7 @@
 import {YoutubePlayer}  from '../dist/index'
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import {Timeline} from 'funkymed-timeliner/dist'
 
 let node = document.getElementById('app');
 
@@ -18,6 +19,8 @@ class Example extends Component
             videoCode: "273lxZw25B0",
             progressbar: 0,
             startAt: 0,
+            isplaying: false,
+            currentTime: 0
         };
         this.customState = this.state.customState;
 
@@ -49,6 +52,34 @@ class Example extends Component
         this.changeVideo = this.changeVideo.bind(this);
         this.onStateChangeMultiCallback = this.onStateChangeMultiCallback.bind(this);
 
+        // Timeliner
+
+
+        this.onUpdateLiveTimelineData = this.onUpdateLiveTimelineData.bind(this);
+
+        this.json = {
+            startTime: '0',
+            options: {
+                groupcolors: {
+                    "slider": ["#ffae32", "#ffc266"],
+                    "title": ["#6f9dff", "#8fb3ff"],
+                    "chat": ["#fe6fff", "#fe8fff"],
+                    "survey": ["#30c84a", "#3dfb5d"],
+                }
+            },
+            scenes: [
+                {start: 0, end: 500, type: "chat", data: {}},
+                {start: 500, end: 1000, type: "slider", data: {}},
+                {start: 1000, end: 1500, type: "survey", data: {}},
+                {start: 1500, end: 2000, type: "title", data: {}},
+                {start: 2000, end: 2500, type: "survey", data: {}},
+                {start: 2500, end: 3000, type: "slider", data: {}},
+                {start: 3000, end: 3500, type: "chat", data: {}},
+                {start: 3500, end: 4000, type: "slider", data: {}},
+                {start: 4000, end: 4500, type: "survey", data: {}},
+                {start: 4500, end: 5000, type: "title", data: {}},
+            ]
+        };
     }
 
     componentDidMount() {
@@ -123,6 +154,14 @@ class Example extends Component
         this.setState({
             progressbar: progression
         });
+    }
+
+    onUpdateLiveTimelineData(data){
+        if(data && data.currentTime) {
+            this.setState({
+                currentTime: data.currentTime ? data.currentTime * 100 : 0
+            });
+        }
     }
 
     onReadyCallback(data){
@@ -214,6 +253,18 @@ class Example extends Component
                     </div>
                 </div>
 
+                console.log(this.state.currentTime)
+                <h2>Timeliner support</h2>
+                <YoutubePlayer code="45wrqMuLAlA"
+                    options={{
+                        width:640,
+                        height:360,
+                        theme:'dark',
+                        controls:true,
+                    }}
+                    onUpdateLiveData={this.onUpdateLiveTimelineData}
+                />
+                <Timeline rendering={true} data={this.json} isplaying={this.state.isplaying} currentTime={this.state.currentTime} />
             </div>
         );
     }

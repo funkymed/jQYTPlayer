@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/cpereira/.nvm/versions/node/v8.11.4/bin/node /Users/cpereira/.nvm/versions/node/v8.11.4/bin/yarn watch
+  /Users/cpereira/.nvm/versions/node/v8.11.4/bin/node /Users/cpereira/.nvm/versions/node/v8.11.4/bin/yarn add funkymed-timiliner --save
 
 PATH: 
   /usr/local/opt/php@7.2/sbin:/usr/local/opt/php@7.2/bin:/Users/cpereira/.nvm/versions/node/v8.11.4/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,19 +14,23 @@ Platform:
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/cpereira/Sites/mandarine/YoutubePlayer/package.json: Unexpected token } in JSON at position 786
-      at JSON.parse (<anonymous>)
-      at /Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:304:30)
-      at /Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:315:13
-      at <anonymous>
+  Error: https://registry.yarnpkg.com/funkymed-timiliner: Not found
+      at Request.params.callback [as _callback] (/Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:66058:18)
+      at Request.self.callback (/Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:129541:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (/Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:130513:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (/Users/cpereira/.nvm/versions/node/v8.11.4/lib/node_modules/yarn/lib/cli.js:130435:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
-    "name": "funkymed-timeliner",
+    "name": "funkymed-youtube-player",
     "version": "1.0.4",
-    "description": "Manage and control a timeliner with many layers",
+    "description": "Manage and control a Youtube-Player in React",
     "main": "index.js",
     "scripts": {
       "build": "node_modules/.bin/babel src --out-dir dist",
@@ -38,17 +42,18 @@ npm manifest:
       "lint": "./node_modules/.bin/tslint assets/js/**/*.{ts,tsx}"
     },
     "keywords": [
-      "layer",
+      "player",
       "control",
-      "visualization",
+      "youtube",
+      "video",
       "funkymed"
     ],
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/funkymed/timeliner.git"
+      "url": "git+https://github.com/funkymed/YoutubePlayer.git"
     },
     "dependencies": {
-      "react": "^15.5.4",
+      "react": "^15.5.4"
     },
     "devDependencies": {
       "babel-cli": "^6.24.1",
@@ -64,9 +69,9 @@ npm manifest:
     "author": "Cyril Pereira",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/funkymed/timeliner/issues"
+      "url": "https://github.com/funkymed/YoutubePlayer/issues"
     },
-    "homepage": "https://github.com/funkymed/timeliner#readme"
+    "homepage": "https://github.com/funkymed/YoutubePlayer#readme"
   }
 
 yarn manifest: 

@@ -1,6 +1,6 @@
 {
   "name": "funkymed-youtube-player",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Manage and control a Youtube-Player in React",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "url": "git+https://github.com/funkymed/YoutubePlayer.git"
   },
   "dependencies": {
+    "funkymed-timeliner": "^1.0.4",
     "react": "^15.5.4"
   },
   "devDependencies": {

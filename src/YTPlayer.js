@@ -103,8 +103,10 @@ export default class YTPlayer {
 
     onReady() {
         this.ready = true;
-        this.data.title = this.yt.getVideoData().title;
-        this.data.duration = this.yt.getDuration();
+        if(!this.data.title && this.data.duration){
+            this.data.title = this.yt.getVideoData().title;
+            this.data.duration = this.yt.getDuration();
+        }
 
         this.updateLiveData();
         if (typeof this.onReadyCallback == 'function') {
@@ -125,7 +127,7 @@ export default class YTPlayer {
     }
 
     onStateChange(a) {
-        if (this.yt)
+        if (this.yt && !this.data.title)
             this.data.title = this.yt.getVideoData().title;
 
         if (typeof this.onLoadDataCallback == 'function') {
@@ -220,7 +222,9 @@ export default class YTPlayer {
 
     follower() {
         this.data.currentTime = this.yt.getCurrentTime();
-        this.data.duration = this.yt.getDuration();
+        if(!this.data.duration){
+            this.data.duration = this.yt.getDuration();
+        }
         if (typeof this.onPlaying == 'function') {
             this.onPlaying();
         }

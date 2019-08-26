@@ -101,8 +101,10 @@ var YTPlayer = function () {
 
     YTPlayer.prototype.onReady = function onReady() {
         this.ready = true;
-        this.data.title = this.yt.getVideoData().title;
-        this.data.duration = this.yt.getDuration();
+        if (!this.data.title && this.data.duration) {
+            this.data.title = this.yt.getVideoData().title;
+            this.data.duration = this.yt.getDuration();
+        }
 
         this.updateLiveData();
         if (typeof this.onReadyCallback == 'function') {
@@ -123,7 +125,7 @@ var YTPlayer = function () {
     };
 
     YTPlayer.prototype.onStateChange = function onStateChange(a) {
-        if (this.yt) this.data.title = this.yt.getVideoData().title;
+        if (this.yt && !this.data.title) this.data.title = this.yt.getVideoData().title;
 
         if (typeof this.onLoadDataCallback == 'function') {
             this.onLoadDataCallback();
@@ -212,7 +214,9 @@ var YTPlayer = function () {
 
     YTPlayer.prototype.follower = function follower() {
         this.data.currentTime = this.yt.getCurrentTime();
-        this.data.duration = this.yt.getDuration();
+        if (!this.data.duration) {
+            this.data.duration = this.yt.getDuration();
+        }
         if (typeof this.onPlaying == 'function') {
             this.onPlaying();
         }

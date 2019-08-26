@@ -1331,11 +1331,6 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-code-prettify@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/code-prettify/-/code-prettify-0.1.0.tgz#46870cc8c1a50d09bad539b33a983dbd4aa34b1e"
-  integrity sha1-RocMyMGlDQm61TmzOpg9vUqjSx4=
-
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -2059,6 +2054,14 @@ function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
+
+funkymed-timeliner@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/funkymed-timeliner/-/funkymed-timeliner-1.0.4.tgz#1901d47bcf8d3e019752b42f190a4f4f28a2eb63"
+  integrity sha512-969oMdMAHf36s30u/84zcl/JikbYmcRy0gxnFxS4DnCIVTDN4uO8SU6fP3e1XxhsGq0014+zI6ntWCeOFyP4RQ==
+  dependencies:
+    react "^15.5.4"
+    unique-hash "^2.6.0"
 
 gauge@~2.7.3:
   version "2.7.4"
