@@ -1,6 +1,6 @@
 {
   "name": "funkymed-youtube-player",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Manage and control a Youtube-Player in React",
   "main": "index.js",
   "scripts": {

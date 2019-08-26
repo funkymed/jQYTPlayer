@@ -12805,7 +12805,8 @@ var Example = function (_Component) {
         _this.actionCustom = _this.actionCustom.bind(_this);
         _this.state = {
             customState: "stop",
-            videoCode: "273lxZw25B0"
+            videoCode: "273lxZw25B0",
+            progressbar: 0
         };
         _this.customState = _this.state.customState;
 
@@ -12895,6 +12896,15 @@ var Example = function (_Component) {
         value: function onUpdateLiveData(data) {
             this.VideoData.data = data;
             document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
+
+            var progression = data.currentTime / data.duration * 100 + "%";
+            if (progression > data.duration) {
+                progression = data.duration;
+            }
+
+            this.setState({
+                progressbar: progression
+            });
         }
     }, {
         key: 'onReadyCallback',
@@ -12904,7 +12914,7 @@ var Example = function (_Component) {
         }
     }, {
         key: 'onStateChangeCallback',
-        value: function onStateChangeCallback(YT, currentStateText) {
+        value: function onStateChangeCallback(YT, currentStateText, data) {
             this.VideoData.state = currentStateText;
             document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
         }
@@ -12965,6 +12975,15 @@ var Example = function (_Component) {
                         'div',
                         { id: 'custom-info' },
                         'Please wait...'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { style: { width: "640px", height: "10px", backgroundColor: "#CECECE" } },
+                        _react2.default.createElement(
+                            'div',
+                            { style: { width: this.state.progressbar, backgroundColor: "red", height: "10px" } },
+                            '\xA0'
+                        )
                     ),
                     _react2.default.createElement(
                         'div',

@@ -14,7 +14,8 @@ class Example extends Component
         this.actionCustom = this.actionCustom.bind(this);
         this.state = {
             customState: "stop",
-            videoCode: "273lxZw25B0"
+            videoCode: "273lxZw25B0",
+            progressbar: 0
         };
         this.customState = this.state.customState;
 
@@ -100,6 +101,15 @@ class Example extends Component
     onUpdateLiveData(data){
         this.VideoData.data = data;
         document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
+
+        var progression = (data.currentTime / data.duration * 100) + "%";
+        if(progression>data.duration){
+            progression = data.duration;
+        }
+
+        this.setState({
+            progressbar: progression
+        });
     }
 
     onReadyCallback(data){
@@ -107,7 +117,7 @@ class Example extends Component
         document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
     }
 
-    onStateChangeCallback(YT, currentStateText){
+    onStateChangeCallback(YT, currentStateText, data){
         this.VideoData.state = currentStateText;
         document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
     }
@@ -155,6 +165,9 @@ class Example extends Component
                     />
                     <div id="custom-info">
                         Please wait...
+                    </div>
+                    <div style={{width:"640px",height:"10px", backgroundColor:"#CECECE"}}>
+                        <div style={{width:this.state.progressbar,backgroundColor:"red", height:"10px"}}>&nbsp;</div>
                     </div>
                     <div>
                         <button onClick={this.actionCustom}>Play</button>
