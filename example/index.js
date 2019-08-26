@@ -29,7 +29,6 @@ class Example extends Component
             data: {},
         };
 
-
         this.onStateChangeCallback = this.onStateChangeCallback.bind(this);
         this.onReadyCallback = this.onReadyCallback.bind(this);
         this.onUpdateLiveData = this.onUpdateLiveData.bind(this);
@@ -89,7 +88,6 @@ class Example extends Component
     }
 
     onClickSeek(e){
-        //e.preventDefault();
         e.stopPropagation();
         if(this.VideoData){
             var seekto =  e.clientX/parseInt(e.target.style.width)*this.VideoData.data.duration;
@@ -113,9 +111,11 @@ class Example extends Component
                 break;
         }
 
-        this.setState({
-            customState: this.customState
-        });
+        if(this.state.customState!=this.customState){
+            this.setState({
+                customState: this.customState
+            });
+        }
     }
 
     changeVideo(e) {
@@ -137,9 +137,11 @@ class Example extends Component
                 break;
         }
 
-        this.setState({
-            videoCode: videoCode
-        });
+        if(this.state.videoCode!=videoCode){
+            this.setState({
+                videoCode: videoCode
+            });
+        }
     }
 
     onUpdateLiveData(data){
@@ -147,19 +149,23 @@ class Example extends Component
         document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
 
         var progression = (data.currentTime / data.duration * 100) + "%";
+
         if(progression>data.duration){
             progression = data.duration;
         }
 
-        this.setState({
-            progressbar: progression
-        });
+        if(this.state.progressbar!=progression){
+            this.setState({
+                progressbar: progression
+            });
+        }
     }
 
     onUpdateLiveTimelineData(data){
-        if(data && data.currentTime) {
+        if(data && data.currentTime && this.state.currentTime!=data.currentTime) {
+            var currentTime = data.currentTime * 100;
             this.setState({
-                currentTime: data.currentTime ? data.currentTime * 100 : 0
+                currentTime: currentTime
             });
         }
     }
@@ -169,12 +175,12 @@ class Example extends Component
         document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
     }
 
-    onStateChangeCallback(YT, currentStateText, data){
+    onStateChangeCallback(currentStateText, data){
         this.VideoData.state = currentStateText;
         document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
     }
 
-    onStateChangeMultiCallback(YT, currentStateText, data){
+    onStateChangeMultiCallback(currentStateText, data){
         this.VideoDataMulti.state = currentStateText;
         this.VideoDataMulti.data = data;
         document.getElementById("custom-info-multi").innerText = JSON.stringify(this.VideoDataMulti, null, 2);
@@ -192,7 +198,7 @@ class Example extends Component
                 <YoutubePlayer code="ipPEy7T3GCk" options={{
                     width:640,
                     height:270,
-                    theme:'light',
+                    fullscreen: false,
                     controls:true,
                     loop:true,
                     start:128
@@ -207,7 +213,6 @@ class Example extends Component
                         options={{
                             width:640,
                             height:360,
-                            theme:'light',
                             showinfo:false,
                             controls:false,
                             loop:true,
@@ -235,7 +240,7 @@ class Example extends Component
                         options={{
                             width:640,
                             height:360,
-                            theme:'dark',
+                            color:'red',
                             controls:true,
                             showinfo:false,
                             loop:true,
@@ -253,13 +258,11 @@ class Example extends Component
                     </div>
                 </div>
 
-                console.log(this.state.currentTime)
                 <h2>Timeliner support</h2>
                 <YoutubePlayer code="45wrqMuLAlA"
                     options={{
                         width:640,
                         height:360,
-                        theme:'dark',
                         controls:true,
                     }}
                     onUpdateLiveData={this.onUpdateLiveTimelineData}

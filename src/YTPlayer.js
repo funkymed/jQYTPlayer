@@ -17,6 +17,7 @@ export default class YTPlayer {
         this.options = {};
         this.date;
         this.duration = 0;
+        this.currentState = false;
 
         this.options = {
             width: 640,
@@ -57,23 +58,23 @@ export default class YTPlayer {
         this.follower = this.follower.bind(this);
         this.onYTReady = this.onYTReady.bind(this);
         this.updateLiveData = this.updateLiveData.bind(this);
-        this.loadData();
+        //this.loadData();
+        this.onYTReady();
     }
 
     loadData(onlyupdate) {
         this.onlyupdate = onlyupdate ? true : false;
-        if (!this.onlyupdate)
-            this.onYTReady();
+        //if (!this.onlyupdate)
+            //this.onYTReady();
 
         if (typeof this.onLoadDataCallback == 'function') {
             this.onLoadDataCallback();
         }
-
     }
 
     onYTReady() {
         if (!youtubePlayerReady) {
-            setTimeout(this.onYTReady, 300);
+            setTimeout(this.onYTReady, 1000);
         } else {
             this.yt = new YT.Player(this.id, {
                 videoId: this.code,
@@ -81,15 +82,17 @@ export default class YTPlayer {
                 height: this.options.height,
                 timeout: 0,
                 playerVars: {
-                    'controls': this.options.controls,
-                    'showinfo': this.options.showinfo,
-                    'autoplay': this.options.autoplay,
+                    'controls': this.options.controls ? this.options.controls : true,
+                    'color': this.options.color ? this.options.color : "white",
+                    'showinfo': this.options.showinfo ? this.options.showinfo : true,
+                    'autoplay': this.options.autoplay ? this.options.autoplay : false,
                     'enablejsapi': 0,
-                    'start': this.options.start,
-                    'theme': this.options.theme,
-                    'iv_load_policy': this.options.policy,
-                    'wmode': 'transparent',
-                    'rel': this.options.rel
+                    'disablekb': 0,
+                    'modestbranding': this.options.modestbranding ? this.options.modestbranding : false,
+                    'fs': this.options.fullscreen ? this.options.fullscreen : true,
+                    'start': this.options.start ? this.options.start : 0,
+                    'iv_load_policy': this.options.policy ? this.options.policy : 3,
+                    'rel': this.options.rel ? this.options.rel : false,
                 },
                 events: {
                     'onReady': this.onReady,
@@ -103,12 +106,13 @@ export default class YTPlayer {
 
     onReady() {
         this.ready = true;
-        if(!this.data.title && this.data.duration){
+        if(!this.data.title && !this.data.duration){
             this.data.title = this.yt.getVideoData().title;
             this.data.duration = this.yt.getDuration();
         }
 
         this.updateLiveData();
+
         if (typeof this.onReadyCallback == 'function') {
             this.onReadyCallback(this.data);
         }
@@ -119,14 +123,20 @@ export default class YTPlayer {
     }
 
     updateLiveData() {
-        this.follower();
-        if (typeof this.onUpdateLiveData == 'function') {
+        if (typeof this.onUpdateLiveData == 'function' && this.currentState==YT.PlayerState.PLAYING){
+            this.follower();
             this.onUpdateLiveData(this.data);
         }
-        requestAnimationFrame(this.updateLiveData);
+        setTimeout(this.updateLiveData, 1000 / 10); // 10fps
     }
 
     onStateChange(a) {
+
+        if(a.data==this.currentState)
+            return;
+
+        this.currentState=a.data;
+
         if (this.yt && !this.data.title)
             this.data.title = this.yt.getVideoData().title;
 
@@ -134,7 +144,8 @@ export default class YTPlayer {
             this.onLoadDataCallback();
         }
 
-        let currentStateText = "";
+
+        var currentStateText = "";
         switch (a.data) {
             case YT.PlayerState.BUFFERING:
             case YT.PlayerState.CUED:
@@ -174,18 +185,20 @@ export default class YTPlayer {
         }
 
         if (typeof this.onStateChangeCallback == 'function')
-            this.onStateChangeCallback(YT, currentStateText, this.data);
+            this.onStateChangeCallback(currentStateText, this.data);
     }
 
     pause() {
-        if (this.ready)
+        if (this.ready && this.yt)
             this.yt.pauseVideo();
     }
 
     play(code) {
-        if (this.ready) {
+        if (this.ready && this.yt) {
             this.loading(true);
             if (code) {
+                this.data.title = false;
+                this.data.duration = false;
                 this.code = code;
                 this.loadData(true);
                 this.yt.loadVideoById(code);
@@ -196,7 +209,7 @@ export default class YTPlayer {
     }
 
     stop() {
-        if (this.ready) {
+        if (this.ready && this.yt) {
             this.seekTo(0);
             var _yt = this.yt;
             setTimeout(function () {
@@ -211,38 +224,26 @@ export default class YTPlayer {
     }
 
     setVolume(v) {
-        if (this.ready)
+        if (this.ready && this.yt)
             this.yt.setVolume(v);
     }
 
     seekTo(to) {
-        if (this.ready)
+        if (this.ready && this.yt)
             this.yt.seekTo(to);
+    }
+
+    loading(isLoading){
+        this.isLoading = isLoading;
     }
 
     follower() {
         this.data.currentTime = this.yt.getCurrentTime();
-        if(!this.data.duration){
+        if (!this.data.duration) {
             this.data.duration = this.yt.getDuration();
         }
         if (typeof this.onPlaying == 'function') {
             this.onPlaying();
         }
     }
-
-    getProgress() {
-        return Math.round(this.data.currentTime / this.data.duration * 100);
-    }
-
-    loading(b) {
-        /*
-        if (b) {
-            if ($(this.loader).length)
-                $(this.loader).show();
-        } else {
-            if ($(this.loader).length)
-                $(this.loader).hide();
-        }*/
-    }
 }
-

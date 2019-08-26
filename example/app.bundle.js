@@ -29650,6 +29650,7 @@ var YTPlayer = function () {
         this.options = {};
         this.date;
         this.duration = 0;
+        this.currentState = false;
 
         this.options = {
             width: 640,
@@ -29684,12 +29685,14 @@ var YTPlayer = function () {
         this.follower = this.follower.bind(this);
         this.onYTReady = this.onYTReady.bind(this);
         this.updateLiveData = this.updateLiveData.bind(this);
-        this.loadData();
+        //this.loadData();
+        this.onYTReady();
     }
 
     YTPlayer.prototype.loadData = function loadData(onlyupdate) {
         this.onlyupdate = onlyupdate ? true : false;
-        if (!this.onlyupdate) this.onYTReady();
+        //if (!this.onlyupdate)
+        //this.onYTReady();
 
         if (typeof this.onLoadDataCallback == 'function') {
             this.onLoadDataCallback();
@@ -29698,7 +29701,7 @@ var YTPlayer = function () {
 
     YTPlayer.prototype.onYTReady = function onYTReady() {
         if (!youtubePlayerReady) {
-            setTimeout(this.onYTReady, 300);
+            setTimeout(this.onYTReady, 1000);
         } else {
             this.yt = new YT.Player(this.id, {
                 videoId: this.code,
@@ -29706,15 +29709,17 @@ var YTPlayer = function () {
                 height: this.options.height,
                 timeout: 0,
                 playerVars: {
-                    'controls': this.options.controls,
-                    'showinfo': this.options.showinfo,
-                    'autoplay': this.options.autoplay,
+                    'controls': this.options.controls ? this.options.controls : true,
+                    'color': this.options.color ? this.options.color : "white",
+                    'showinfo': this.options.showinfo ? this.options.showinfo : true,
+                    'autoplay': this.options.autoplay ? this.options.autoplay : false,
                     'enablejsapi': 0,
-                    'start': this.options.start,
-                    'theme': this.options.theme,
-                    'iv_load_policy': this.options.policy,
-                    'wmode': 'transparent',
-                    'rel': this.options.rel
+                    'disablekb': 0,
+                    'modestbranding': this.options.modestbranding ? this.options.modestbranding : false,
+                    'fs': this.options.fullscreen ? this.options.fullscreen : true,
+                    'start': this.options.start ? this.options.start : 0,
+                    'iv_load_policy': this.options.policy ? this.options.policy : 3,
+                    'rel': this.options.rel ? this.options.rel : false
                 },
                 events: {
                     'onReady': this.onReady,
@@ -29728,12 +29733,13 @@ var YTPlayer = function () {
 
     YTPlayer.prototype.onReady = function onReady() {
         this.ready = true;
-        if (!this.data.title && this.data.duration) {
+        if (!this.data.title && !this.data.duration) {
             this.data.title = this.yt.getVideoData().title;
             this.data.duration = this.yt.getDuration();
         }
 
         this.updateLiveData();
+
         if (typeof this.onReadyCallback == 'function') {
             this.onReadyCallback(this.data);
         }
@@ -29744,14 +29750,19 @@ var YTPlayer = function () {
     };
 
     YTPlayer.prototype.updateLiveData = function updateLiveData() {
-        this.follower();
-        if (typeof this.onUpdateLiveData == 'function') {
+        if (typeof this.onUpdateLiveData == 'function' && this.currentState == YT.PlayerState.PLAYING) {
+            this.follower();
             this.onUpdateLiveData(this.data);
         }
-        requestAnimationFrame(this.updateLiveData);
+        setTimeout(this.updateLiveData, 1000 / 10); // 10fps
     };
 
     YTPlayer.prototype.onStateChange = function onStateChange(a) {
+
+        if (a.data == this.currentState) return;
+
+        this.currentState = a.data;
+
         if (this.yt && !this.data.title) this.data.title = this.yt.getVideoData().title;
 
         if (typeof this.onLoadDataCallback == 'function') {
@@ -29797,17 +29808,19 @@ var YTPlayer = function () {
                 break;
         }
 
-        if (typeof this.onStateChangeCallback == 'function') this.onStateChangeCallback(YT, currentStateText, this.data);
+        if (typeof this.onStateChangeCallback == 'function') this.onStateChangeCallback(currentStateText, this.data);
     };
 
     YTPlayer.prototype.pause = function pause() {
-        if (this.ready) this.yt.pauseVideo();
+        if (this.ready && this.yt) this.yt.pauseVideo();
     };
 
     YTPlayer.prototype.play = function play(code) {
-        if (this.ready) {
+        if (this.ready && this.yt) {
             this.loading(true);
             if (code) {
+                this.data.title = false;
+                this.data.duration = false;
                 this.code = code;
                 this.loadData(true);
                 this.yt.loadVideoById(code);
@@ -29818,7 +29831,7 @@ var YTPlayer = function () {
     };
 
     YTPlayer.prototype.stop = function stop() {
-        if (this.ready) {
+        if (this.ready && this.yt) {
             this.seekTo(0);
             var _yt = this.yt;
             setTimeout(function () {
@@ -29832,11 +29845,15 @@ var YTPlayer = function () {
     };
 
     YTPlayer.prototype.setVolume = function setVolume(v) {
-        if (this.ready) this.yt.setVolume(v);
+        if (this.ready && this.yt) this.yt.setVolume(v);
     };
 
     YTPlayer.prototype.seekTo = function seekTo(to) {
-        if (this.ready) this.yt.seekTo(to);
+        if (this.ready && this.yt) this.yt.seekTo(to);
+    };
+
+    YTPlayer.prototype.loading = function loading(isLoading) {
+        this.isLoading = isLoading;
     };
 
     YTPlayer.prototype.follower = function follower() {
@@ -29847,21 +29864,6 @@ var YTPlayer = function () {
         if (typeof this.onPlaying == 'function') {
             this.onPlaying();
         }
-    };
-
-    YTPlayer.prototype.getProgress = function getProgress() {
-        return Math.round(this.data.currentTime / this.data.duration * 100);
-    };
-
-    YTPlayer.prototype.loading = function loading(b) {
-        /*
-        if (b) {
-            if ($(this.loader).length)
-                $(this.loader).show();
-        } else {
-            if ($(this.loader).length)
-                $(this.loader).hide();
-        }*/
     };
 
     return YTPlayer;
@@ -30080,7 +30082,6 @@ var Example = function (_Component) {
     }, {
         key: 'onClickSeek',
         value: function onClickSeek(e) {
-            //e.preventDefault();
             e.stopPropagation();
             if (this.VideoData) {
                 var seekto = e.clientX / parseInt(e.target.style.width) * this.VideoData.data.duration;
@@ -30105,9 +30106,11 @@ var Example = function (_Component) {
                     break;
             }
 
-            this.setState({
-                customState: this.customState
-            });
+            if (this.state.customState != this.customState) {
+                this.setState({
+                    customState: this.customState
+                });
+            }
         }
     }, {
         key: 'changeVideo',
@@ -30130,9 +30133,11 @@ var Example = function (_Component) {
                     break;
             }
 
-            this.setState({
-                videoCode: videoCode
-            });
+            if (this.state.videoCode != videoCode) {
+                this.setState({
+                    videoCode: videoCode
+                });
+            }
         }
     }, {
         key: 'onUpdateLiveData',
@@ -30141,20 +30146,24 @@ var Example = function (_Component) {
             document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
 
             var progression = data.currentTime / data.duration * 100 + "%";
+
             if (progression > data.duration) {
                 progression = data.duration;
             }
 
-            this.setState({
-                progressbar: progression
-            });
+            if (this.state.progressbar != progression) {
+                this.setState({
+                    progressbar: progression
+                });
+            }
         }
     }, {
         key: 'onUpdateLiveTimelineData',
         value: function onUpdateLiveTimelineData(data) {
-            if (data && data.currentTime) {
+            if (data && data.currentTime && this.state.currentTime != data.currentTime) {
+                var currentTime = data.currentTime * 100;
                 this.setState({
-                    currentTime: data.currentTime ? data.currentTime * 100 : 0
+                    currentTime: currentTime
                 });
             }
         }
@@ -30166,13 +30175,13 @@ var Example = function (_Component) {
         }
     }, {
         key: 'onStateChangeCallback',
-        value: function onStateChangeCallback(YT, currentStateText, data) {
+        value: function onStateChangeCallback(currentStateText, data) {
             this.VideoData.state = currentStateText;
             document.getElementById("custom-info").innerText = JSON.stringify(this.VideoData, null, 2);
         }
     }, {
         key: 'onStateChangeMultiCallback',
-        value: function onStateChangeMultiCallback(YT, currentStateText, data) {
+        value: function onStateChangeMultiCallback(currentStateText, data) {
             this.VideoDataMulti.state = currentStateText;
             this.VideoDataMulti.data = data;
             document.getElementById("custom-info-multi").innerText = JSON.stringify(this.VideoDataMulti, null, 2);
@@ -30199,7 +30208,7 @@ var Example = function (_Component) {
                 _react2.default.createElement(_index.YoutubePlayer, { code: 'ipPEy7T3GCk', options: {
                         width: 640,
                         height: 270,
-                        theme: 'light',
+                        fullscreen: false,
                         controls: true,
                         loop: true,
                         start: 128
@@ -30218,7 +30227,6 @@ var Example = function (_Component) {
                         options: {
                             width: 640,
                             height: 360,
-                            theme: 'light',
                             showinfo: false,
                             controls: false,
                             loop: true
@@ -30270,7 +30278,7 @@ var Example = function (_Component) {
                         options: {
                             width: 640,
                             height: 360,
-                            theme: 'dark',
+                            color: 'red',
                             controls: true,
                             showinfo: false,
                             loop: true
@@ -30307,7 +30315,6 @@ var Example = function (_Component) {
                         )
                     )
                 ),
-                'console.log(this.state.currentTime)',
                 _react2.default.createElement(
                     'h2',
                     null,
@@ -30317,7 +30324,6 @@ var Example = function (_Component) {
                     options: {
                         width: 640,
                         height: 360,
-                        theme: 'dark',
                         controls: true
                     },
                     onUpdateLiveData: this.onUpdateLiveTimelineData
