@@ -12718,6 +12718,7 @@ var YoutubePlayer = function (_Component) {
         _this.props = props;
         _this.state = props;
         _this.player;
+        _this.startAt = _this.props.startAt;
         _this.id = _this.generateUid();
         _this.code = _this.props.code;
         return _this;
@@ -12742,6 +12743,10 @@ var YoutubePlayer = function (_Component) {
         if (this.code != this.props.code) {
             this.code = this.props.code;
             this.player.play(this.code);
+        }
+        if (this.startAt != this.props.startAt) {
+            this.startAt = this.props.startAt;
+            this.player.seekTo(this.startAt);
         }
     };
 
@@ -12802,11 +12807,13 @@ var Example = function (_Component) {
         // Custom Example
         var _this = _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
 
+        _this.onClickSeek = _this.onClickSeek.bind(_this);
         _this.actionCustom = _this.actionCustom.bind(_this);
         _this.state = {
             customState: "stop",
             videoCode: "273lxZw25B0",
-            progressbar: 0
+            progressbar: 0,
+            startAt: 0
         };
         _this.customState = _this.state.customState;
 
@@ -12846,6 +12853,18 @@ var Example = function (_Component) {
     }, {
         key: 'updateCurrentTime',
         value: function updateCurrentTime() {}
+    }, {
+        key: 'onClickSeek',
+        value: function onClickSeek(e) {
+            //e.preventDefault();
+            e.stopPropagation();
+            if (this.VideoData) {
+                var seekto = e.clientX / parseInt(e.target.style.width) * this.VideoData.data.duration;
+                this.setState({
+                    startAt: seekto
+                });
+            }
+        }
     }, {
         key: 'actionCustom',
         value: function actionCustom(e) {
@@ -12962,6 +12981,7 @@ var Example = function (_Component) {
                     null,
                     _react2.default.createElement(_index.YoutubePlayer, (_React$createElement = { code: '45wrqMuLAlA',
                         currentState: this.CustomState,
+                        startAt: this.state.startAt,
                         options: {
                             width: 640,
                             height: 360,
@@ -12978,10 +12998,10 @@ var Example = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { style: { width: "640px", height: "10px", backgroundColor: "#CECECE" } },
+                        { style: { width: "640px", height: "10px", backgroundColor: "#CECECE" }, onClick: this.onClickSeek },
                         _react2.default.createElement(
                             'div',
-                            { style: { width: this.state.progressbar, backgroundColor: "red", height: "10px" } },
+                            { style: { pointerEvents: "none", width: this.state.progressbar, backgroundColor: "red", height: "10px" } },
                             '\xA0'
                         )
                     ),

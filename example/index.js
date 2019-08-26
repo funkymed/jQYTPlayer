@@ -182,7 +182,7 @@ class Example extends Component
                     </div>
                     <div style={{width:"640px",height:"10px", backgroundColor:"#CECECE"}} onClick={this.onClickSeek}>
                         <div style={{pointerEvents: "none",width:this.state.progressbar,backgroundColor:"red", height:"10px"}}>&nbsp;</div>
-                    </div>c
+                    </div>
                     <div>
                         <button onClick={this.actionCustom}>Play</button>
                         <button onClick={this.actionCustom}>Pause</button>
