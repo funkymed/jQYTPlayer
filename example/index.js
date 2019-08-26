@@ -11,11 +11,13 @@ class Example extends Component
     {
         super();
         // Custom Example
+        this.onClickSeek = this.onClickSeek.bind(this);
         this.actionCustom = this.actionCustom.bind(this);
         this.state = {
             customState: "stop",
             videoCode: "273lxZw25B0",
-            progressbar: 0
+            progressbar: 0,
+            startAt: 0,
         };
         this.customState = this.state.customState;
 
@@ -53,6 +55,17 @@ class Example extends Component
     }
 
     updateCurrentTime(){
+    }
+
+    onClickSeek(e){
+        //e.preventDefault();
+        e.stopPropagation();
+        if(this.VideoData){
+            var seekto =  e.clientX/parseInt(e.target.style.width)*this.VideoData.data.duration;
+            this.setState({
+                startAt: seekto
+            });
+        }
     }
 
     actionCustom(e) {
@@ -151,6 +164,7 @@ class Example extends Component
                 <div>
                     <YoutubePlayer code="45wrqMuLAlA"
                         currentState={this.CustomState}
+                        startAt={this.state.startAt}
                         options={{
                             width:640,
                             height:360,
@@ -166,9 +180,9 @@ class Example extends Component
                     <div id="custom-info">
                         Please wait...
                     </div>
-                    <div style={{width:"640px",height:"10px", backgroundColor:"#CECECE"}}>
-                        <div style={{width:this.state.progressbar,backgroundColor:"red", height:"10px"}}>&nbsp;</div>
-                    </div>
+                    <div style={{width:"640px",height:"10px", backgroundColor:"#CECECE"}} onClick={this.onClickSeek}>
+                        <div style={{pointerEvents: "none",width:this.state.progressbar,backgroundColor:"red", height:"10px"}}>&nbsp;</div>
+                    </div>c
                     <div>
                         <button onClick={this.actionCustom}>Play</button>
                         <button onClick={this.actionCustom}>Pause</button>

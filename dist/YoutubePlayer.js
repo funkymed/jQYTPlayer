@@ -29,6 +29,7 @@ var YoutubePlayer = function (_Component) {
         _this.props = props;
         _this.state = props;
         _this.player;
+        _this.startAt = _this.props.startAt;
         _this.id = _this.generateUid();
         _this.code = _this.props.code;
         return _this;
@@ -53,6 +54,10 @@ var YoutubePlayer = function (_Component) {
         if (this.code != this.props.code) {
             this.code = this.props.code;
             this.player.play(this.code);
+        }
+        if (this.startAt != this.props.startAt) {
+            this.startAt = this.props.startAt;
+            this.player.seekTo(this.startAt);
         }
     };
 

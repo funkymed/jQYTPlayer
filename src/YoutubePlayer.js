@@ -7,6 +7,7 @@ export default class YoutubePlayer extends Component {
         this.props = props;
         this.state = props;
         this.player;
+        this.startAt = this.props.startAt;
         this.id = this.generateUid();
         this.code = this.props.code;
     }
@@ -30,6 +31,10 @@ export default class YoutubePlayer extends Component {
         if(this.code!=this.props.code){
             this.code = this.props.code;
             this.player.play(this.code);
+        }
+        if(this.startAt!=this.props.startAt) {
+            this.startAt = this.props.startAt;
+            this.player.seekTo(this.startAt);
         }
     }
 
