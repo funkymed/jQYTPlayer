@@ -67,16 +67,16 @@ class Example extends Component
                 }
             },
             scenes: [
-                {start: 0, end: 500, type: "chat", data: {}},
-                {start: 500, end: 1000, type: "slider", data: {}},
-                {start: 1000, end: 1500, type: "survey", data: {}},
-                {start: 1500, end: 2000, type: "title", data: {}},
-                {start: 2000, end: 2500, type: "survey", data: {}},
-                {start: 2500, end: 3000, type: "slider", data: {}},
-                {start: 3000, end: 3500, type: "chat", data: {}},
-                {start: 3500, end: 4000, type: "slider", data: {}},
-                {start: 4000, end: 4500, type: "survey", data: {}},
-                {start: 4500, end: 5000, type: "title", data: {}},
+                {start: 0, type: "chat", data: {}},
+                {start: 5, type: "slider", data: {}},
+                {start: 10, type: "survey", data: {}},
+                {start: 15, type: "title", data: {}},
+                {start: 20, type: "survey", data: {}},
+                {start: 25, type: "slider", data: {}},
+                {start: 30, type: "chat", data: {}},
+                {start: 35, type: "slider", data: {}},
+                {start: 40, type: "survey", data: {}},
+                {start: 45, type: "title", data: {}},
             ]
         };
     }
@@ -163,10 +163,8 @@ class Example extends Component
 
     onUpdateLiveTimelineData(data){
         if(data && data.currentTime && this.state.currentTime!=data.currentTime) {
-            var currentTime = data.currentTime * 100;
-            this.setState({
-                currentTime: currentTime
-            });
+            var currentTime = data.currentTime;
+            this.setState({ currentTime });
         }
     }
 

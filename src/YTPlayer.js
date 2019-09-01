@@ -127,7 +127,7 @@ export default class YTPlayer {
             this.follower();
             this.onUpdateLiveData(this.data);
         }
-        setTimeout(this.updateLiveData, 1000 / 10); // 10fps
+        setTimeout(this.updateLiveData, 1000 / 20); // 20fps
     }
 
     onStateChange(a) {

@@ -14576,17 +14576,11 @@ var Tools = function () {
         _classCallCheck(this, Tools);
     }
 
-    Tools.hhmmss = function hhmmss(secs) {
-        var minutes = Math.floor(secs / 60);
-        secs = secs % 60;
-        var hours = Math.floor(minutes / 60);
-        minutes = minutes % 60;
-        return Tools.pad(hours) + ":" + Tools.pad(minutes) + ":" + Tools.pad(secs);
-        // return pad(hours)+":"+pad(minutes)+":"+pad(secs); for old browsers
-    };
-
-    Tools.pad = function pad(num) {
-        return ("0" + num).slice(-2);
+    Tools.hhmmss = function hhmmss(sec) {
+        var o = new Date(0);
+        o.setSeconds(sec);
+        var p = new Date(sec * 1000);
+        return o.toISOString().substr(11, 8) + "." + p.getMilliseconds();
     };
 
     Tools.getHash = function getHash(data) {
@@ -29754,7 +29748,7 @@ var YTPlayer = function () {
             this.follower();
             this.onUpdateLiveData(this.data);
         }
-        setTimeout(this.updateLiveData, 1000 / 10); // 10fps
+        setTimeout(this.updateLiveData, 1000 / 20); // 20fps
     };
 
     YTPlayer.prototype.onStateChange = function onStateChange(a) {
@@ -30068,7 +30062,7 @@ var Example = function (_Component) {
                     "survey": ["#30c84a", "#3dfb5d"]
                 }
             },
-            scenes: [{ start: 0, end: 500, type: "chat", data: {} }, { start: 500, end: 1000, type: "slider", data: {} }, { start: 1000, end: 1500, type: "survey", data: {} }, { start: 1500, end: 2000, type: "title", data: {} }, { start: 2000, end: 2500, type: "survey", data: {} }, { start: 2500, end: 3000, type: "slider", data: {} }, { start: 3000, end: 3500, type: "chat", data: {} }, { start: 3500, end: 4000, type: "slider", data: {} }, { start: 4000, end: 4500, type: "survey", data: {} }, { start: 4500, end: 5000, type: "title", data: {} }]
+            scenes: [{ start: 0, type: "chat", data: {} }, { start: 5, type: "slider", data: {} }, { start: 10, type: "survey", data: {} }, { start: 15, type: "title", data: {} }, { start: 20, type: "survey", data: {} }, { start: 25, type: "slider", data: {} }, { start: 30, type: "chat", data: {} }, { start: 35, type: "slider", data: {} }, { start: 40, type: "survey", data: {} }, { start: 45, type: "title", data: {} }]
         };
         return _this;
     }
@@ -30161,10 +30155,8 @@ var Example = function (_Component) {
         key: 'onUpdateLiveTimelineData',
         value: function onUpdateLiveTimelineData(data) {
             if (data && data.currentTime && this.state.currentTime != data.currentTime) {
-                var currentTime = data.currentTime * 100;
-                this.setState({
-                    currentTime: currentTime
-                });
+                var currentTime = data.currentTime;
+                this.setState({ currentTime: currentTime });
             }
         }
     }, {
@@ -31063,6 +31055,16 @@ module.exports = performanceNow;
 
 exports.__esModule = true;
 
+var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+            }
+        }
+    }return target;
+};
+
 var _Scene = __webpack_require__(253);
 
 var _Scene2 = _interopRequireDefault(_Scene);
@@ -31100,8 +31102,11 @@ var Scenario = function () {
         this.params.timer = timer;
         for (var b in this.scenes) {
             var scene = this.scenes[b];
-            if (timer >= scene.params.start && timer < scene.params.end && scene.params.enabled) {
-                scene.callback(scene);
+            if (timer >= scene.params.start && timer < scene.params.start + 1 && scene.params.enabled) {
+                var data = _extends({}, scene, {
+                    label: 'start_callback'
+                });
+                scene.callback(data);
             }
         }
     };
@@ -31332,11 +31337,11 @@ var Timeline = function (_Component) {
         var itemName = d.createElement('div');
 
         var displayTime = this.props.currentTime >= this.state.endTime ? this.state.endTime : this.props.currentTime;
-
-        itemName.appendChild(document.createTextNode('Timecode : ' + _Tools2.default.hhmmss(displayTime)));
-        itemName.style.height = blockH - 4 + "px";
-        itemName.style.paddingTop = "4px";
-        itemName.style.paddingLeft = "4px";
+        itemName.appendChild(document.createTextNode('' + _Tools2.default.hhmmss(displayTime)));
+        itemName.style.height = blockH - 6 + "px";
+        itemName.style.paddingTop = "6px";
+        itemName.style.textAlign = "left";
+        itemName.style.paddingLeft = "10px";
         itemName.style.background = "#333";
         itemName.style.color = "white";
         blockName.appendChild(itemName);
@@ -31346,29 +31351,23 @@ var Timeline = function (_Component) {
         itemDuration.style.background = "#555";
         itemDuration.style.color = "white";
         blockDuration.appendChild(itemDuration);
-        /*
-            itemDuration.addEventListener('click', function(e) {
-              var scrW = w.innerWidth || e.clientWidth || g.clientWidth;
-              var seekTime = e.offsetX/(scrW*blockRight/100)*end;
-              s.seekTo(seekTime);
-            });
-        */
 
-        //175 = this.state.endTime = 5
-        for (var tt = 0; tt <= this.state.endTime; tt += Math.ceil(this.state.endTime / 10)) {
+        for (var tt = 0; tt <= this.state.endTime; tt += Math.ceil(this.state.endTime / 13)) {
             var item = d.createElement('div');
 
-            item.appendChild(document.createTextNode("| " + _Tools2.default.hhmmss(tt)));
-            item.style.paddingTop = "4px";
-            item.style.paddingLeft = "4px";
+            item.appendChild(document.createTextNode(_Tools2.default.hhmmss(tt)));
+            item.style.paddingTop = "6px";
+            item.style.borderLeft = "1px white solid";
+            item.style.paddingLeft = "10px";
             item.style.display = "inline-block";
             item.style.position = "absolute";
-            item.style.height = blockH - 4 + "px";
-            item.style.left = tt / this.state.endTime * blockRight + blockLeft + "%";
+            item.style.height = blockH - 6 + "px";
+            item.style.left = blockLeft + tt / this.state.endTime * 100 + "%";
             item.style.top = l * blockH - 2 + "px";
             item.style.textAlign = "let";
             itemDuration.appendChild(item);
         }
+
         var l = 1;
         for (var c in this.timelineItems) {
             var itemName = d.createElement('div');
@@ -31400,7 +31399,6 @@ var Timeline = function (_Component) {
                 var i = _ref;
 
                 var item = d.createElement('div');
-                item.appendChild(document.createTextNode(_Tools2.default.hhmmss(i.start)));
 
                 /*color block*/
                 if (this.state.options.groupcolors && this.state.options.groupcolors[c]) {
@@ -31410,39 +31408,57 @@ var Timeline = function (_Component) {
                     var color = cc % 2 == 0 ? "#898989" : "#a0a0a0";
                 }
 
-                item.style.background = color;
                 item.style.display = "inline-block";
                 item.style.position = "absolute";
-                item.style.height = blockH + "px";
                 item.style.paddingTop = "4px";
                 item.style.paddingLeft = "4px";
-                item.style.height = blockH - 4 + "px";
                 item.style.overflow = "hidden";
-
-                item.style.left = i.start / this.state.endTime * blockRight + blockLeft + "%";
-                item.style.top = l * blockH + "px";
-                item.style.width = (i.end - i.start) / this.state.endTime * blockRight + "%";
-
                 item.style.textAlign = "left";
+                item.style.top = l * blockH + "px";
+                item.style.width = (i.end - i.start) / this.state.endTime * 100 + "%";
+
+                item.style.left = i.start / this.state.endTime * 100 + blockLeft + "%";
+
+                /*if(i.end){
+                    item.style.background = color;
+                    item.style.height = blockH - 4 + "px";
+                }else{*/
+                item.style.marginTop = "4px";
+
+                var circle = d.createElement('div');
+                circle.style.borderRadius = "50%";
+                circle.style.width = blockH / 2 + "px";
+                circle.style.height = blockH / 2 + "px";
+                circle.style.background = color;
+                circle.style.float = "left";
+                circle.style.marginRight = "5px";
+                item.appendChild(circle);
+                //}
+                if (this.endTime < 45) {
+                    item.appendChild(document.createTextNode(_Tools2.default.hhmmss(i.start)));
+                }
 
                 if (this.editcallback) {
+                    var itemEvent = circle ? circle : item;
                     for (var dataset in i) {
-                        item.dataset[dataset] = i[dataset];
+                        itemEvent.dataset[dataset] = i[dataset];
                     }
-                    item.dataset.hash = _Tools2.default.getHash([i.start, i.type, i.end].join("-"));
-                    item.dataset.timecode = _Tools2.default.hhmmss(i.start);
+                    itemEvent.dataset.hash = _Tools2.default.getHash([i.start, i.type, i.end].join("-"));
+                    itemEvent.dataset.timecode = _Tools2.default.hhmmss(i.start);
 
-                    item.addEventListener('click', this.editcallback);
-                    item.addEventListener('mouseover', this.editcallback);
-                    item.addEventListener('mouseout', this.editcallback);
+                    itemEvent.addEventListener('click', this.editcallback);
+                    itemEvent.addEventListener('mouseover', this.editcallback);
+                    itemEvent.addEventListener('mouseout', this.editcallback);
                 }
 
                 itemDuration.appendChild(item);
 
                 cc++;
+                circle = false;
             }
             l++;
         }
+
         var cursorTimeline = d.createElement('div');
         cursorTimeline.style.zIndex = 100;
         cursorTimeline.style.height = blockH * l + "px";
@@ -31453,9 +31469,12 @@ var Timeline = function (_Component) {
         containerTimeline.appendChild(cursorTimeline);
         blockDuration.style.height = blockH * l + "px";
 
-        var timer = this.props.currentTime > this.state.endTime ? this.state.endTime : this.props.currentTime;
+        var timer = this.props.currentTime >= this.state.endTime ? this.state.endTime : this.props.currentTime;
 
-        var cursorOfsset = timer / this.state.endTime * 90 + 10;
+        var cursorOfsset = timer / this.state.endTime * 100 + blockLeft;
+        if (cursorOfsset > 100) {
+            cursorOfsset = 100;
+        }
         cursorTimeline.style.left = cursorOfsset + "%";
 
         if (this.props.rendering) {
@@ -31494,7 +31513,7 @@ var Timeline = function (_Component) {
 
             var data = _ref2;
 
-            data.end = data.end ? data.end : data.start + 5;
+            //data.end = data.end ? data.end : data.start+5;
             if (this.callback) {
                 data.callback = this.callback;
             }
@@ -31506,11 +31525,19 @@ var Timeline = function (_Component) {
 
             this.timelineItems[scene.getType()].push(data);
 
-            if (data.end > this.state.endTime) {
-                this.state.endTime = data.end;
-                this.scenario.updateEndTime(this.state.endTime);
+            if (data.end) {
+                if (data.end > this.state.endTime) {
+                    this.state.endTime = data.end;
+                    this.scenario.updateEndTime(this.state.endTime);
+                }
+            } else {
+                if (data.start > this.state.endTime) {
+                    this.state.endTime = data.start;
+                    this.scenario.updateEndTime(this.state.endTime);
+                }
             }
         }
+        this.state.endTime += this.state.endTime * 20 / 100;
 
         if (this.props.isplaying) {
             this.scenario.check(this.props.currentTime);

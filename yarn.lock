@@ -2055,10 +2055,10 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-funkymed-timeliner@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/funkymed-timeliner/-/funkymed-timeliner-1.0.4.tgz#1901d47bcf8d3e019752b42f190a4f4f28a2eb63"
-  integrity sha512-969oMdMAHf36s30u/84zcl/JikbYmcRy0gxnFxS4DnCIVTDN4uO8SU6fP3e1XxhsGq0014+zI6ntWCeOFyP4RQ==
+funkymed-timeliner@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/funkymed-timeliner/-/funkymed-timeliner-1.0.5.tgz#80f0ac9425d97b8abdcdd1f30406d6cd705f12ee"
+  integrity sha512-oDDDLwdzLtTBNK1hjnKXfD3+Mg5+Qe+goCKRZHfm2ha1olFkxHYHo4J3SPrTUNHnGbNpybrgmkRxQPNix/E2cQ==
   dependencies:
     react "^15.5.4"
     unique-hash "^2.6.0"

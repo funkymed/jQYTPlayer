@@ -1795,7 +1795,7 @@ var YTPlayer = function () {
                 this.follower();
                 this.onUpdateLiveData(this.data);
             }
-            setTimeout(this.updateLiveData, 1000 / 10); // 10fps
+            setTimeout(this.updateLiveData, 1000 / 20); // 20fps
         }
     }, {
         key: 'onStateChange',
